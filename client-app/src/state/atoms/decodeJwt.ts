@@ -23,7 +23,6 @@ export function decodeJwt(jwt): User {
     const u: User = {
         id: payload.Id,
         username: payload.Username,
-        jwt: jwt
     };
     return u;
 }
