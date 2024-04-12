@@ -1,0 +1,26 @@
+on:
+  workflow_dispatch: 
+jobs:
+    deploy_client_app:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-node@v4
+          with:
+            node-version: '20'
+        - run: cd client-app && npm i && npm run build
+        - uses: FirebaseExtended/action-hosting-deploy@v0
+          with:
+            channelId: live
+            
+            #THE NAME OF THE DIRECTORY YOU GET BY RUNNING npm run build
+            entryPoint: 'client-app'
+            
+            #GO TO DEVELOPER SETTINGS ON GITHUB TO MAKE A TOKEN
+            repoToken: '${{ secrets.TOKEN }}'
+            
+            #YOU CAN GET THE BLOW CREDENTIALS BY RUNNING
+            # firebase init hosting:github
+            #USING THE firebase-tools NPM CLI
+            firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PRGREACT }}'  
+            projectId: prgreact

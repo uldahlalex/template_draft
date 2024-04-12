@@ -1,0 +1,43 @@
+{
+  "name": "client-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run swagger && vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "swagger": "npx swagger-typescript-api -p ../swagger.json -o ./httpclient -n Api.ts --axios",
+    "deploy": "npm run swagger && npm run build && firebase deploy --only hosting"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "daisyui": "^4.8.0",
+    "jotai": "^2.7.0",
+    "jotai-effect": "^1.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "react-router-dom": "^6.22.2",
+    "theme-change": "^2.5.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "@types/react": "^18.2.56",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.19",
+    "axios": "^1.6.7",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "postcss": "^8.4.38",
+    "swagger-typescript-api": "13.0.3",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.5",
+    "vite-plugin-singlefile": "^2.0.1"
+  }
+}
