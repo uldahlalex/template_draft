@@ -2,6 +2,7 @@ import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {userAtom, jwtAtom} from "../../reusables/state/external.ts";
+import {decodeJwt} from "../../reusables/logic/external.ts";
 
 
 //todo can this be extended to replace effects guards?

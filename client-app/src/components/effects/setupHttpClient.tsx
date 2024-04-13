@@ -2,7 +2,7 @@ import {useAtom} from "jotai/index";
 import {AxiosError, AxiosResponse} from "axios";
 import toast from "react-hot-toast";
 import {userAtom, UserAtom} from "../../reusables/state/external.ts";
-import {http} from "../../reusables/logic/internal/http.ts";
+import {http} from "../../reusables/logic/internal/dependent/http.ts";
 
 interface ProblemDetails {
     type: string;
