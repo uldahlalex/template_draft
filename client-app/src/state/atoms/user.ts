@@ -4,6 +4,7 @@ import { atomWithStorage } from 'jotai/utils';
 import { atomEffect } from 'jotai-effect'
 import { toast } from 'react-hot-toast';
 import {decodeJwt} from "./decodeJwt.ts";
+import {useNavigate} from "react-router-dom";
 
 export interface User {
     username: string;
@@ -29,5 +30,13 @@ export const decodeAndSetUserWhenJwtAtomChanges = atomEffect((get, set) => {
     console.log(jwt)
     if (jwt) {
         set(userAtom, decodeJwt(jwt));
+    }
+});
+export const getBackToLoginWhenJwtIsRemoved = atomEffect((get, set) => {
+    //This means sign out will essentially just be:
+    // localStorage.removeItem('token');
+    const jwt = get(jwtAtom);
+    if (!jwt) {
+        console.log("tsx comp now reponsible for this instead")
     }
 });
