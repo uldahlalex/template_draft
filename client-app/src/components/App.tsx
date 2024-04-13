@@ -2,10 +2,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import {jwtAtom, decodeAndSetUserWhenJwtAtomChanges, User, userAtom, sayHiWhenUserChanges} from '../state/atoms/user';
 import {Toaster} from "react-hot-toast";
-import RegisterAtomEffects from "./RegisterAtomEffects.tsx";
 import NavigationEffect from "./NavigateWhenJwtIsRemoved.tsx";
+import {jwtAtom, User, userAtom} from "../state/atoms/user.ts";
 
 export default function App() {
     const [user, setUser] = useAtom(userAtom);
@@ -16,7 +15,6 @@ export default function App() {
             <Toaster />
             <NavigationEffect />
             <>
-                <RegisterAtomEffects/>
                 USER: {JSON.stringify(user, null, 2)}
                 <br />
                 <br />
