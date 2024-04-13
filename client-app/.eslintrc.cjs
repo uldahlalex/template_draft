@@ -19,6 +19,10 @@ module.exports = {
             "parserOptions": {
                 "sourceType": "script"
             }
+        },
+        {
+            "files": ["**/*.ts", "**/*.tsx"],
+
         }
     ],
     "parser": "@typescript-eslint/parser",
@@ -29,7 +33,8 @@ module.exports = {
     },
     "plugins": [
         "@typescript-eslint",
-        "react"
+        "react",
+        "restrict-internal"
     ],
     "rules": {
         "@typescript-eslint/no-unused-vars": "off",
@@ -37,7 +42,9 @@ module.exports = {
         "@typescript-eslint/no-explicit-any": "off",
         "react/prop-types": "off",
         "no-console": "warn",
-        "react/jsx-key": ["error", {"checkFragmentShorthand": true}],
+        "react/jsx-key": ["error", { "checkFragmentShorthand": true }],
         "@typescript-eslint/ban-ts-comment": "off",
+        "restrict-internal/no-restricted-internal-imports": "error"
+
     }
 };

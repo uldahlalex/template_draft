@@ -1,4 +1,3 @@
-// state/atoms/effects.ts
 import {atomWithStorage} from 'jotai/utils';
 
 export interface UserAtom {
