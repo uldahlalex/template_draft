@@ -1,6 +1,5 @@
-import {UserAtom} from "../atoms/internal/userAtom.ts";
 
-export function decodeJwt(jwt): UserAtom {
+export function decodeJwt(jwt) {
     function base64UrlToBase64(input) {
         let base64String = input.replace(/-/g, '+').replace(/_/g, '/');
         while (base64String.length % 4) {
@@ -20,9 +19,6 @@ export function decodeJwt(jwt): UserAtom {
         throw new Error('Invalid JWT: The token must have three parts.');
     }
     const payload = decodeBase64Json(base64UrlToBase64(parts[1]));
-    const u: UserAtom = {
-        id: payload.Id,
-        username: payload.Username,
-    };
-    return u;
+    //user payloads such as Id and Username can be accessed paylod.Id and payload.Username
+    return payload;
 }

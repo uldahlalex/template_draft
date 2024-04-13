@@ -3,10 +3,9 @@ import React from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import {Toaster} from "react-hot-toast";
-import NavigationEffect from "../effects/NavigationEffect.tsx";
-import {userAtom} from "../atoms/internal/userAtom.ts";
-import {UserAtom} from "../types/commonTypes.ts";
-import {jwtAtom} from "../atoms/internal/jwtAtom.ts";
+import NavigationEffect from "./effects/NavigationEffect.tsx";
+import {jwtAtom, UserAtom, userAtom} from "../reusables/state/external.ts";
+import SetupHttpClient from "./effects/setupHttpClient.tsx";
 
 export default function App() {
     const [user, setUser] = useAtom(userAtom);
@@ -16,6 +15,7 @@ export default function App() {
         <Router>
             <Toaster />
             <NavigationEffect />
+            <SetupHttpClient />
             <>
                 USER: {JSON.stringify(user, null, 2)}
                 <br />

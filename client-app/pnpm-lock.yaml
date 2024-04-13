@@ -13,7 +13,7 @@ dependencies:
     version: 4.8.0(postcss@8.4.38)
   jotai:
     specifier: ^2.7.0
-    version: 2.7.0(@types/react@18.2.64)(react@18.2.0)
+    version: 2.7.0(@constants/react@18.2.64)(react@18.2.0)
   jotai-effect:
     specifier: ^1.0.0
     version: 1.0.0(jotai@2.7.0)
@@ -2690,7 +2690,7 @@ packages:
     peerDependencies:
       jotai: '>=2.5.0'
     dependencies:
-      jotai: 2.7.0(@types/react@18.2.64)(react@18.2.0)
+      jotai: 2.7.0(@constants/react@18.2.64)(react@18.2.0)
     dev: false
 
   /jotai@2.7.0(@types/react@18.2.64)(react@18.2.0):

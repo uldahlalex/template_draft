@@ -1,17 +1,20 @@
 import {useAtom} from "jotai/index";
 import {AxiosError, AxiosResponse} from "axios";
 import toast from "react-hot-toast";
-import {ProblemDetails} from "../types/problemDetails.ts";
-import {userAtom, UserAtom} from "../atoms/internal/userAtom.ts";
-import {Api} from "../../httpclient/Api.ts";
+import {userAtom, UserAtom} from "../../reusables/state/external.ts";
+import {http} from "../../reusables/logic/internal/http.ts";
 
-export const http = new Api({
-    baseURL: 'http://localhost:5000',
-});
+interface ProblemDetails {
+    type: string;
+    title: string;
+    status: number;
+    detail?: string;
+    instance?: string;
+    [key: string]: any;
+}
+export default function SetupHttpClient() {
 
-export function SetupHttpClient() {
-
-    const [effects, setUser] = useAtom<UserAtom | null>(userAtom);
+    const [, setUser] = useAtom<UserAtom | null>(userAtom);
 
 
     http.instance.interceptors.request.use(config => {
@@ -40,5 +43,6 @@ export function SetupHttpClient() {
         setUser(null)
         toast.error('Unauthorized access');
     }
+    return null;
 }
 

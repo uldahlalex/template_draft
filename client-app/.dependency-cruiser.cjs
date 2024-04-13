@@ -108,7 +108,7 @@ module.exports = {
       }
     },
     {
-      name: 'no-duplicate-dep-types',
+      name: 'no-duplicate-dep-constants',
       comment:
         "Likely this module depends on an external ('npm') package that occurs more than once " +
         "in your package.json i.e. bot as a devDependencies and in dependencies. This will cause " +
@@ -119,7 +119,7 @@ module.exports = {
         moreThanOneDependencyType: true,
         // as it's pretty common to have a type import be a type only import 
         // _and_ (e.g.) a devDependency - don't consider type-only dependency
-        // types for this rule
+        // constants for this rule
         dependencyTypesNot: ["type-only"]
       }
     },
@@ -161,7 +161,7 @@ module.exports = {
           'type-only'
         ],
         pathNot: [
-          'node_modules/@types/'
+          'node_modules/@constants/'
         ]
       }
     },

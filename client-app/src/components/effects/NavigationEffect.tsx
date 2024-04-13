@@ -1,8 +1,7 @@
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {userAtom} from "../atoms/internal/userAtom.ts";
-import {jwtAtom} from "../atoms/internal/jwtAtom.ts";
+import {userAtom, jwtAtom} from "../../reusables/state/external.ts";
 
 
 //todo can this be extended to replace effects guards?

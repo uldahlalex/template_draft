@@ -53,7 +53,7 @@
 </a>
 </g>
 </g>
-<!-- src/state/atoms/userAtom.ts -->
+<!-- src/state/state/userAtom.ts -->
 <g id="node2" class="node">
 <title>src/state/atoms/userAtom.ts</title>
 <g id="a_node2"><a xlink:href="src/state/atoms/userAtom.ts" xlink:title="userAtom.ts">
@@ -62,7 +62,7 @@
 </a>
 </g>
 </g>
-<!-- src/components/App.tsx&#45;&gt;src/state/atoms/userAtom.ts -->
+<!-- src/components/App.tsx&#45;&gt;src/state/state/userAtom.ts -->
 <g id="edge1" class="edge">
 <title>src/components/App.tsx&#45;&gt;src/state/atoms/userAtom.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M158.09,-145.47C161.66,-127.53 172.16,-89.1 198.5,-73 244.1,-45.12 274.24,-43.41 318.75,-73 339.61,-86.87 347.7,-116.28 350.82,-135.59"/>
@@ -83,7 +83,7 @@
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M172.93,-145.31C190.28,-135.08 217.83,-118.83 237.62,-107.16"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="239.21,-108.48 243.31,-103.62 237.08,-104.86 239.21,-108.48"/>
 </g>
-<!-- src/state/effects/NavigationEffect.tsx&#45;&gt;src/state/atoms/userAtom.ts -->
+<!-- src/state/effects/NavigationEffect.tsx&#45;&gt;src/state/state/userAtom.ts -->
 <g id="edge6" class="edge">
 <title>src/state/auth/NavigationEffect.tsx&#45;&gt;src/state/atoms/userAtom.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M277.55,-102.53C291.99,-112.41 314.73,-127.98 331.43,-139.41"/>
@@ -119,16 +119,16 @@
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M82.82,-164.69C93.29,-171.91 108.26,-181.99 127.83,-193.71"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="127.32,-196.03 133.55,-197.28 129.46,-192.42 127.32,-196.03"/>
 </g>
-<!-- src/functions/setupHttpClient.ts -->
+<!-- src/logic/setupHttpClient.tsx -->
 <g id="node6" class="node">
-<title>src/functions/setupHttpClient.ts</title>
-<g id="a_node6"><a xlink:href="src/functions/setupHttpClient.ts" xlink:title="no&#45;orphans">
+<title>src/functions/setupHttpClient.tsx</title>
+<g id="a_node6"><a xlink:href="src/functions/setupHttpClient.tsx" xlink:title="no&#45;orphans">
 <path fill="#ccffcc" stroke="orange" d="M105.83,-103.25C105.83,-103.25 30.17,-103.25 30.17,-103.25 27.08,-103.25 24,-100.17 24,-97.08 24,-97.08 24,-90.92 24,-90.92 24,-87.83 27.08,-84.75 30.17,-84.75 30.17,-84.75 105.83,-84.75 105.83,-84.75 108.92,-84.75 112,-87.83 112,-90.92 112,-90.92 112,-97.08 112,-97.08 112,-100.17 108.92,-103.25 105.83,-103.25"/>
-<text text-anchor="start" x="32" y="-90.7" font-family="Helvetica,sans-Serif" font-size="9.00" fill="orange">setupHttpClient.ts</text>
+<text text-anchor="start" x="32" y="-90.7" font-family="Helvetica,sans-Serif" font-size="9.00" fill="orange">setupHttpClient.tsx</text>
 </a>
 </g>
 </g>
-<!-- src/state/atoms/decodeJwt.ts -->
+<!-- src/state/state/decodeJwt.ts -->
 <g id="node7" class="node">
 <title>src/state/atoms/decodeJwt.ts</title>
 <g id="a_node7"><a xlink:href="src/state/atoms/decodeJwt.ts" xlink:title="decodeJwt.ts">
@@ -137,13 +137,13 @@
 </a>
 </g>
 </g>
-<!-- src/state/atoms/decodeJwt.ts&#45;&gt;src/state/atoms/userAtom.ts -->
+<!-- src/state/state/decodeJwt.ts&#45;&gt;src/state/state/userAtom.ts -->
 <g id="edge5" class="edge">
 <title>src/state/atoms/decodeJwt.ts&#45;&gt;src/state/atoms/userAtom.ts</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M297.57,-154C304.13,-154 311.02,-154 317.62,-154"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="317.38,-156.1 323.38,-154 317.38,-151.9 317.38,-156.1"/>
 </g>
-<!-- src/types/problemDetails.ts -->
+<!-- src/constants/problemDetails.ts -->
 <g id="node8" class="node">
 <title>src/types/problemDetails.ts</title>
 <g id="a_node8"><a xlink:href="src/types/problemDetails.ts" xlink:title="no&#45;orphans">
