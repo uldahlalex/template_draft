@@ -1,8 +1,12 @@
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {jwtAtom, userAtom} from "../state/atoms/user.ts";
+import {userAtom} from "../atoms/internal/userAtom.ts";
+import {jwtAtom} from "../atoms/internal/jwtAtom.ts";
 
+
+//todo can this be extended to replace effects guards?
+//todo make one bigger effect that handles effects state changes?
 export default function NavigationEffect() {
     const [jwt, setJwt] = useAtom(jwtAtom);
     const [, setUser ] = useAtom(userAtom);
@@ -17,5 +21,5 @@ export default function NavigationEffect() {
         }
     }, [jwt, setJwt, navigate]);
 
-    return null; // This component does not render anything
+    return null;
 }

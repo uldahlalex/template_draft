@@ -9,7 +9,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "swagger": "npx swagger-typescript-api -p ../swagger.json -o ./httpclient -n Api.ts --axios",
-    "deploy": "npm run swagger && npm run build && firebase deploy --only hosting"
+    "deploy": "npm run swagger && npm run build && firebase deploy --only hosting",
+    "depcruiseinit": "npx dependency-cruiser --init",
+    "depcruise": "npx depcruise src --include-only \"^src\" --output-type dot | dot -T svg > dependency-graph.svg"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -31,6 +33,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.7",
+    "dependency-cruiser": "^16.3.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",
     "postcss": "^8.4.38",

@@ -3,8 +3,10 @@ import React from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import {Toaster} from "react-hot-toast";
-import NavigationEffect from "./NavigateWhenJwtIsRemoved.tsx";
-import {jwtAtom, User, userAtom} from "../state/atoms/user.ts";
+import NavigationEffect from "../effects/NavigationEffect.tsx";
+import {userAtom} from "../atoms/internal/userAtom.ts";
+import {UserAtom} from "../types/commonTypes.ts";
+import {jwtAtom} from "../atoms/internal/jwtAtom.ts";
 
 export default function App() {
     const [user, setUser] = useAtom(userAtom);
@@ -23,7 +25,7 @@ export default function App() {
                 <br />
                 <button className="btn"
                         onClick={() => {
-                            const user: User = {
+                            const user: UserAtom = {
                                 username: Math.random().toString(),
                                 id: 1,
                             };
