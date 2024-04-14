@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
-namespace api.Boilerplate.ReusableHelpers.GlobalModels;
+namespace api.Independent.GlobalModels;
 
 public class TodoWithTags
 {

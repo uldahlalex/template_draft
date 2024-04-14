@@ -1,4 +1,6 @@
-using api.Boilerplate.EndpointHelpers;
+using api.EndpointHelpers.EndpointHelpers;
+using api.Independent.GlobalModels;
+using api.Independent.GlobalValues;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +19,7 @@ public class AddTagToTodo : ICarterModule
                 [FromRoute] int tagId,
                 [FromRouteAttribute] int todoId) =>
             {
-                ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
+                HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
                 var sql = @"
 INSERT INTO todo_manager.todo_tag (todoid, tagid)
 VALUES (@todoId, @tagId);";

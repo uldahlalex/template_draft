@@ -1,5 +1,6 @@
-using api.Boilerplate.ReusableHelpers.GlobalModels;
-using api.Boilerplate.ReusableHelpers.Security;
+using api.EndpointHelpers.Security;
+using api.Independent.GlobalModels;
+using api.Independent.GlobalValues;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ public class SignIn : ICarterModule
             [FromServices] TokenService tokenService) =>
         {
             using var conn = ds.OpenConnection();
-            var userToCheck = conn.QueryFirstOrDefault<Boilerplate.ReusableHelpers.GlobalModels.User>(
+            var userToCheck = conn.QueryFirstOrDefault<User>(
                 "SELECT * FROM todo_manager.user where username = @username;",
                 new
                 {
@@ -33,7 +34,7 @@ public class SignIn : ICarterModule
             {
                 token = TokenService.IssueJwt([
                     new KeyValuePair<string, object>(nameof(userToCheck.Username), userToCheck.Username), 
-                    new KeyValuePair<string, object>(nameof(userToCheck.Id), userToCheck.Id)])
+                    new KeyValuePair<string, object>(nameof(userToCheck.Id), userToCheck.Id)], Environment.GetEnvironmentVariable(KeyNames.JWT_KEY))
             };
         });
     }

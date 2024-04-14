@@ -1,8 +1,8 @@
 ﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using api.Boilerplate.DbHelpers;
-using api.Boilerplate.ReusableHelpers.GlobalModels;
-using api.Boilerplate.UtilityFunctions;
+using api.BootstrappingHelpers.DbHelpers;
+using api.Independent.BusinessAgnostics;
+using api.Independent.GlobalModels;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;

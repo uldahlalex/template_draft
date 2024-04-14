@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace api.Boilerplate.ReusableHelpers.Security;
+namespace api.EndpointHelpers.Security;
 
 public class CredentialService
 {
@@ -13,7 +13,7 @@ public class CredentialService
         return Convert.ToBase64String(bytes);
     }
 
-    public static string? Hash(string? password, string? salt)
+    public static string Hash(string? password, string? salt)
     {
         try
         {

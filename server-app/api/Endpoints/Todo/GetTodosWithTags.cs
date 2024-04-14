@@ -1,6 +1,7 @@
 using System.Text.Json;
-using api.Boilerplate.EndpointHelpers;
-using api.Boilerplate.ReusableHelpers.GlobalModels;
+using api.EndpointHelpers.EndpointHelpers;
+using api.Independent.GlobalModels;
+using api.Independent.GlobalValues;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ public class GetTodosWithTags : ICarterModule
             [FromQuery] bool showCompleted,
             [FromQuery] int limit = 50) =>
         {
-            var user = ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
+            var user = HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
 
             var tags = JsonSerializer.Deserialize<int[]>(serializedTagArray);
             IEnumerable<dynamic> todos;
@@ -68,7 +69,7 @@ LIMIT {limit};
                     CreatedAt = row.createdat,
                     Priority = row.priority,
                     UserId = row.userid,
-                    Tags = JsonSerializer.Deserialize<List<Boilerplate.ReusableHelpers.GlobalModels.Tag>>(row.tags)
+                    Tags = JsonSerializer.Deserialize<List<Independent.GlobalModels.Tag>>(row.tags)
                 };
 
                 return todo;

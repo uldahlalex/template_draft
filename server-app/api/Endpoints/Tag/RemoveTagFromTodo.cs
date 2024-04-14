@@ -1,4 +1,6 @@
-using api.Boilerplate.EndpointHelpers;
+using api.EndpointHelpers.EndpointHelpers;
+using api.Independent.GlobalModels;
+using api.Independent.GlobalValues;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +18,7 @@ public class RemoveTagToTodo : ICarterModule
                 [FromRoute] int tagId,
                 [FromRoute] int todoId) =>
             {
-                ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
+                HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
 
                 var sql = @"
 DELETE FROM todo_manager.todo_tag

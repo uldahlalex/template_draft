@@ -1,8 +1,8 @@
 using System.Text.Json;
-using api.Boilerplate;
-using api.Boilerplate.DbHelpers;
-using api.Boilerplate.ReusableHelpers.GlobalValues;
-using api.Boilerplate.ReusableHelpers.Security;
+using api.BootstrappingHelpers.DbHelpers;
+using api.BootstrappingHelpers.Documentation;
+using api.EndpointHelpers.Security;
+using api.Independent.GlobalValues;
 using Carter;
 using FluentValidation;
 
@@ -13,7 +13,7 @@ public class Program
     public static async Task Main()
     {
         var app = await Startup();
-        if (!Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Production))
+        if (!Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT).Equals(HardcodedValues.Environments.Production))
         {
             app.Services.GetService<DbScripts>()!.RebuildDbSchema();
             app.Services.GetService<DbScripts>()!.SeedDB();
@@ -23,17 +23,23 @@ public class Program
     }
 
     public static async Task<WebApplication> Startup()
-    {
+    {        if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)))
+             {
+                 Console.WriteLine("No JWT_KEY found in environment variables. Setting default harcoded value.");
+                 Environment.SetEnvironmentVariable(KeyNames.JWT_KEY, HardcodedValues.JWT_KEY);
+             }
+        
         Console.WriteLine("BUILDING API WITH ENVIRONMENT: +" +
                           JsonSerializer.Serialize(Environment.GetEnvironmentVariables()));
-        if (!Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Production) &&
-            !Env.SKIP_DB_CONTAINER_BUILDING.Equals("true"))
-            await BuildDbContainer.StartDbInContainer();
-
+        
+        if (!Environment.GetEnvironmentVariable(KeyNames.SKIP_DB_CONTAINER_BUILDING).Equals("true"))
+            await BuildDbContainer.StartDbInContainer(Environment.GetEnvironmentVariable(KeyNames.PG_CONN) ??
+                                                      HardcodedValues.LOCAL_POSTGRES);
+        
         var builder = WebApplication.CreateBuilder();
         builder.Services
             .AddProblemDetails()
-            .AddNpgsqlDataSource(Env.PG_CONN, cfg => cfg.EnableParameterLogging())
+            .AddNpgsqlDataSource(HardcodedValues.LOCAL_POSTGRES, cfg => cfg.EnableParameterLogging())
             .AddSingleton<DbScripts>()
             .AddSingleton<CredentialService>()
             .AddSingleton<TokenService>()
@@ -43,11 +49,12 @@ public class Program
             .AddSwaggerDefinition();
         builder.Services.AddHostedService<SwaggerJsonGeneratorService>();
 
-        if (Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Testing))
+        if (Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT).Equals(HardcodedValues.Environments.Testing))
             builder.WebHost.UseUrls("http://localhost:9999");
     
         var app = builder.Build();
 
+        //todo er dette i stedet for default exc handler?
         app.Use(async (context, next) =>
         {
             try

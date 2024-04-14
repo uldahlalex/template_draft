@@ -1,4 +1,4 @@
-namespace api.Boilerplate.ReusableHelpers.GlobalModels;
+namespace api.Independent.GlobalModels;
 
 public class ResponseDto<T>(T data, object? metadata = null)
 {

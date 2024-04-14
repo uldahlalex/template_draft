@@ -1,5 +1,6 @@
-using api.Boilerplate.EndpointHelpers;
-using api.Boilerplate.ReusableHelpers.GlobalModels;
+using api.EndpointHelpers.EndpointHelpers;
+using api.Independent.GlobalModels;
+using api.Independent.GlobalValues;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -21,10 +22,10 @@ public class Createtag : ICarterModule
             HttpContext context,
             [FromServices] NpgsqlDataSource ds) =>
         {
-            User user = ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
+            User user = HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT));
             using (var conn = ds.OpenConnection())
             {
-                var insertedTag = conn.QueryFirst<Boilerplate.ReusableHelpers.GlobalModels.Tag>(
+                var insertedTag = conn.QueryFirst<Independent.GlobalModels.Tag>(
                     "insert into todo_manager.tag (name, userid) values (@name, @userid) returning *;",
                     new
                     {

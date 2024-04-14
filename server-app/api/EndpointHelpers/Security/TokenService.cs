@@ -1,22 +1,18 @@
-using api.Boilerplate.ReusableHelpers.GlobalModels;
-using api.Boilerplate.ReusableHelpers.GlobalValues;
-using JWT;
 using JWT.Algorithms;
 using JWT.Builder;
-using JWT.Serializers;
 
-namespace api.Boilerplate.ReusableHelpers.Security;
+namespace api.EndpointHelpers.Security;
 
 public class TokenService
 {
-    public static string IssueJwt(IEnumerable<KeyValuePair<string,object>> claims)
+    public static string IssueJwt(IEnumerable<KeyValuePair<string, object>> claims, string privateKey)
     {
         try
         {
             return JwtBuilder.Create()
-                .WithAlgorithm(new HMACSHA512Algorithm())  
+                .WithAlgorithm(new HMACSHA512Algorithm())
                 .AddClaims(claims)
-                .WithSecret(Env.JWT_KEY)
+                .WithSecret(privateKey)
                 .Encode();
         }
         catch (Exception e)
@@ -27,6 +23,4 @@ public class TokenService
             throw new InvalidOperationException("User authentication succeeded, but could not create token");
         }
     }
-
-
 }

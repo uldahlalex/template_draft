@@ -1,4 +1,6 @@
-using api.Boilerplate.EndpointHelpers;
+using api.EndpointHelpers.EndpointHelpers;
+using api.Independent.GlobalModels;
+using api.Independent.GlobalValues;
 using Carter;
 using Dapper;
 using Npgsql;
@@ -11,7 +13,7 @@ public class Delete : ICarterModule
     {
         app.MapDelete("api/todo/{id}", (int id, HttpContext context, NpgsqlDataSource ds) =>
         {
-            ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
+            HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
 
             using (var conn = ds.OpenConnection())
             {

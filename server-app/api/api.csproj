@@ -18,5 +18,14 @@
 
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Independent\Independent.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="BootstrappingHelpers\" />
+      <Folder Include="Independent\" />
+    </ItemGroup>
+
 
 </Project>

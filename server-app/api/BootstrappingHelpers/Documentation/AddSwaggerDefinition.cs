@@ -1,7 +1,7 @@
-using api.Boilerplate.ReusableHelpers.GlobalValues;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
-namespace api.Boilerplate;
+namespace api.BootstrappingHelpers.Documentation;
 
 public static class SwaggerDefinition
 {
@@ -13,7 +13,7 @@ public static class SwaggerDefinition
             {
                 Description =
                     "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                Name = StringConstants.JwtConstants.Authorization,
+                Name = HeaderNames.Authorization,
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
                 Scheme = "Bearer"

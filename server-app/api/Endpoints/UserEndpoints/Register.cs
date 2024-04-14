@@ -1,5 +1,6 @@
-using api.Boilerplate.ReusableHelpers.GlobalModels;
-using api.Boilerplate.ReusableHelpers.Security;
+using api.EndpointHelpers.Security;
+using api.Independent.GlobalModels;
+using api.Independent.GlobalValues;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,7 @@ public class Register : ICarterModule
                 var salt = CredentialService.GenerateSalt();
                 var hash = CredentialService.Hash(req.Password, salt);
                 using var conn = ds.OpenConnection();
-                var user = conn.QueryFirstOrDefault<Boilerplate.ReusableHelpers.GlobalModels.User>(
+                var user = conn.QueryFirstOrDefault<User>(
                     "insert into todo_manager.user (username, passwordhash, salt) values (@Username, @PasswordHash, @Salt) RETURNING *;",
                     new
                     {
@@ -38,7 +39,7 @@ public class Register : ICarterModule
                 {
                     token = TokenService.IssueJwt([
                         new KeyValuePair<string, object>(nameof(user.Username), user.Username), 
-                        new KeyValuePair<string, object>(nameof(user.Id), user.Id)])
+                        new KeyValuePair<string, object>(nameof(user.Id), user.Id)], Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!)
                 };
             });
     }

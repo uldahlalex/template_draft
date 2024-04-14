@@ -1,7 +1,7 @@
 using System.Net.Http.Headers;
 using api;
-using api.Boilerplate.ReusableHelpers.GlobalModels;
-using api.Boilerplate.ReusableHelpers.Security;
+using api.EndpointHelpers.Security;
+using api.Independent.GlobalModels;
 using Microsoft.AspNetCore.Builder;
 
 namespace tests;

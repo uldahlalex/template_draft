@@ -1,5 +1,6 @@
-using api.Boilerplate.EndpointHelpers;
-using api.Boilerplate.ReusableHelpers.GlobalModels;
+using api.EndpointHelpers.EndpointHelpers;
+using api.Independent.GlobalModels;
+using api.Independent.GlobalValues;
 using Carter;
 using Dapper;
 using Npgsql;
@@ -22,7 +23,7 @@ public class UpdateTodo : ICarterModule
     {
         app.MapPut("/api/todos/{id}", (UpdateTodoRequestDto req, NpgsqlDataSource ds, HttpContext context) =>
         {
-            ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
+            HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
 
             var conn = ds.OpenConnection();
             var userId = 1;
