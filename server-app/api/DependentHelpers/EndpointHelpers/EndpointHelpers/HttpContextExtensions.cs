@@ -3,7 +3,7 @@ using System.Text.Json;
 using JWT.Algorithms;
 using JWT.Builder;
 
-namespace api.EndpointHelpers.EndpointHelpers;
+namespace api.DependentHelpers.EndpointHelpers.EndpointHelpers;
 
 public static class HttpContextExtensions
 {

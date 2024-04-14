@@ -1,4 +1,4 @@
-using api.Independent.GlobalValues;
+using Agnostics.KeysAndValues;
 using JWT.Algorithms;
 using JWT.Builder;
 using JWT.Exceptions;

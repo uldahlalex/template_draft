@@ -1,6 +1,6 @@
-using api.EndpointHelpers.EndpointHelpers;
-using api.Independent.GlobalModels;
-using api.Independent.GlobalValues;
+using Agnostics.GlobalModels;
+using Agnostics.KeysAndValues;
+using api.DependentHelpers.EndpointHelpers.EndpointHelpers;
 using Carter;
 using Dapper;
 using Npgsql;
@@ -15,10 +15,10 @@ public class GetTags : ICarterModule
             {
                 HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
 
-                List<Independent.GlobalModels.Tag> tags;
+                List<Agnostics.GlobalModels.Tag> tags;
                 using (var conn = ds.OpenConnection())
                 {
-                    tags = conn.Query<Independent.GlobalModels.Tag>(@"
+                    tags = conn.Query<Agnostics.GlobalModels.Tag>(@"
 select * from todo_manager.tag where userid = 1;
 ")
                         .ToList();

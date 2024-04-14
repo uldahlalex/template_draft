@@ -1,7 +1,7 @@
 using System.Text.Json;
-using api.EndpointHelpers.EndpointHelpers;
-using api.Independent.GlobalModels;
-using api.Independent.GlobalValues;
+using Agnostics.GlobalModels;
+using Agnostics.KeysAndValues;
+using api.DependentHelpers.EndpointHelpers.EndpointHelpers;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -69,7 +69,7 @@ LIMIT {limit};
                     CreatedAt = row.createdat,
                     Priority = row.priority,
                     UserId = row.userid,
-                    Tags = JsonSerializer.Deserialize<List<Independent.GlobalModels.Tag>>(row.tags)
+                    Tags = JsonSerializer.Deserialize<List<Agnostics.GlobalModels.Tag>>(row.tags)
                 };
 
                 return todo;

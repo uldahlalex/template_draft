@@ -1,4 +1,4 @@
-namespace api.Independent.GlobalModels;
+namespace Agnostics.GlobalModels;
 
 public class ResponseDto<T>(T data, object? metadata = null)
 {

@@ -1,6 +1,6 @@
-using api.EndpointHelpers.EndpointHelpers;
-using api.Independent.GlobalModels;
-using api.Independent.GlobalValues;
+using Agnostics.GlobalModels;
+using Agnostics.KeysAndValues;
+using api.DependentHelpers.EndpointHelpers.EndpointHelpers;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +25,7 @@ public class Createtag : ICarterModule
             User user = HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT));
             using (var conn = ds.OpenConnection())
             {
-                var insertedTag = conn.QueryFirst<Independent.GlobalModels.Tag>(
+                var insertedTag = conn.QueryFirst<Agnostics.GlobalModels.Tag>(
                     "insert into todo_manager.tag (name, userid) values (@name, @userid) returning *;",
                     new
                     {

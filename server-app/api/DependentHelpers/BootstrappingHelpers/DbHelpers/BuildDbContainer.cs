@@ -4,7 +4,7 @@ using Docker.DotNet;
 using Docker.DotNet.Models;
 using Npgsql;
 
-namespace api.BootstrappingHelpers.DbHelpers;
+namespace api.DependentHelpers.BootstrappingHelpers.DbHelpers;
 
 public static class BuildDbContainer
 {

@@ -1,8 +1,8 @@
 using System.Text.Json;
-using api.BootstrappingHelpers.DbHelpers;
-using api.BootstrappingHelpers.Documentation;
-using api.EndpointHelpers.Security;
-using api.Independent.GlobalValues;
+using Agnostics.KeysAndValues;
+using api.DependentHelpers.BootstrappingHelpers.DbHelpers;
+using api.DependentHelpers.BootstrappingHelpers.Documentation;
+using api.DependentHelpers.EndpointHelpers.Security;
 using Carter;
 using FluentValidation;
 

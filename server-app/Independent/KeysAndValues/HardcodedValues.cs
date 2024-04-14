@@ -1,4 +1,4 @@
-namespace api.Independent.GlobalValues;
+namespace Agnostics.KeysAndValues;
 
 public static class HardcodedValues
 {

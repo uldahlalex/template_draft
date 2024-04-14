@@ -1,6 +1,6 @@
-using api.EndpointHelpers.Security;
-using api.Independent.GlobalModels;
-using api.Independent.GlobalValues;
+using Agnostics.GlobalModels;
+using Agnostics.KeysAndValues;
+using api.DependentHelpers.EndpointHelpers.Security;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;

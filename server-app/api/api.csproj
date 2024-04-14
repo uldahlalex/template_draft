@@ -23,8 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="BootstrappingHelpers\" />
-      <Folder Include="Independent\" />
+      <Folder Include="DependentHelpers\" />
     </ItemGroup>
 
 

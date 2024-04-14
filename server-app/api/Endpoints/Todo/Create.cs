@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using api.EndpointHelpers.EndpointHelpers;
-using api.Independent.GlobalModels;
-using api.Independent.GlobalValues;
+using Agnostics.GlobalModels;
+using Agnostics.KeysAndValues;
+using api.DependentHelpers.EndpointHelpers.EndpointHelpers;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +42,7 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
                         new { TodoId = todo.Id, TagId = e.Id }) == 0)
                     throw new InvalidOperationException("Could not associate tag with todo");
             });
-            todo.Tags = transaction.Connection!.Query<Independent.GlobalModels.Tag>(
+            todo.Tags = transaction.Connection!.Query<Agnostics.GlobalModels.Tag>(
                 "select * from todo_manager.tag join todo_manager.todo_tag tt on tag.id = tt.tagid where tt.todoid = @id;",
                 new { id = todo.Id }).ToList() ?? throw new InvalidOperationException("Could not retrieve tags");
 
@@ -60,5 +60,5 @@ public class CreateTodoRequestDto
     public string Description { get; set; } = default!;
     public DateTime DueDate { get; set; }
     public int Priority { get; set; }
-    public List<Independent.GlobalModels.Tag> Tags { get; set; } = default!;
+    public List<Agnostics.GlobalModels.Tag> Tags { get; set; } = default!;
 }

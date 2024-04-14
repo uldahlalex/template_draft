@@ -1,7 +1,7 @@
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
-namespace api.BootstrappingHelpers.Documentation;
+namespace api.DependentHelpers.BootstrappingHelpers.Documentation;
 
 public static class SwaggerDefinition
 {
