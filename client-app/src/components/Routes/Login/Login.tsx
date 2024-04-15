@@ -1,11 +1,13 @@
 import {useState} from "react";
-import {http} from "../../../reusables/logic/external.ts";
+import {decodeJwt, http} from "../../../reusables/logic/external.ts";
 import {useAtom} from "jotai";
-import {jwtAtom} from "../../../reusables/state/external.ts";
+import {jwtAtom, User, userAtom} from "../../../reusables/state/external.ts";
+import toast from "react-hot-toast";
 
 export default function Login() {
 
     const [, setJwt] = useAtom(jwtAtom);
+    const [, setUser] = useAtom(userAtom);
 
     const [authForm, setauthForm] = useState({
         username: "",
@@ -16,15 +18,19 @@ export default function Login() {
         http.api
             .signinCreate(authForm)
             .then((r) => {
-            setJwt(r.data.token!);
-        })
+                authenticateWithToken(r.data.token!);
+            })
     }
     const register = (e) => {
         http.api
             .registerCreate(authForm)
             .then((r) => {
-                setJwt(r.data.token!);
+                authenticateWithToken(r.data.token!);
         });
+    }
+
+    const authenticateWithToken = (token) => {
+        setJwt(token);
     }
 
     return (
@@ -48,7 +54,7 @@ export default function Login() {
 
                         <input onChange={e => setauthForm({...authForm, password: e.target.value})}
                                name="password" type="password" className="grow"
-                               onKeyDown={e => e.key === 'ENTER' ? signIn(e) : null}
+                               onKeyDown={e => e.key === 'Enter' ? signIn(e) : null}
                                placeholder="••••••••"/>
                     </label>
 

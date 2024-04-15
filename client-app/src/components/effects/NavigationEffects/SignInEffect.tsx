@@ -9,24 +9,13 @@ import toast from "react-hot-toast";
 
 export default function SignInEffect() {
     const [jwt] = useAtom(jwtAtom);
-    const [, setUser] = useAtom(userAtom);
     const navigate = useNavigate();
 
-    //todo this is doing a lot, maybe change to several different
-    //purposes: decoding and checking, setting user values to atom navigating and presenting toast all when jwt value changes
     useEffect(() => {
         if(jwt) {
-            const decoded = decodeJwt(jwt);
-            if(decoded.Id == undefined || decoded.Username == undefined)  {
-                throw new Error('Invalid token');
-            }
-            const newUser: User = {
-                id: decoded.Id,
-                username: decoded.Username
-            }
-            setUser(newUser);
             navigate('/feed');
-            toast.success('Welcome back ' + newUser.username + '!')
+            //how do i set user data from jwt to useratom without changing state inside a useffect?
+            toast.success('Successful Authentication')
         }
     }, [jwt]);
 

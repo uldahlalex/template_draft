@@ -9,6 +9,7 @@ export default function GoToLoginWhenJwtAtomIsNull() {
     const [jwt] = useAtom(jwtAtom);
     const navigate = useNavigate();
 
+    //todo merge with other effect for more DRY code or not?
     useEffect(() => {
         if (!jwt) navigate('/login');
     }, [jwt]);

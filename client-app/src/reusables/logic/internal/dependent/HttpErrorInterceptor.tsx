@@ -1,8 +1,8 @@
 import {AxiosError, AxiosResponse} from "axios";
 import toast from "react-hot-toast";
-import {http} from "../../../reusables/logic/external.ts";
+import {http} from "./http.ts";
 import {useAtom} from "jotai";
-import {jwtAtom} from "../../../reusables/state/external.ts";
+import {jwtAtom} from "../../../state/external.ts";
 
 interface ProblemDetails {
     type: string;
@@ -12,7 +12,7 @@ interface ProblemDetails {
     instance?: string;
     [key: string]: any;
 }
-export default function HttpErrorInterceptor() {
+export const HttpErrorInterceptor = ()  => {
 
     const [, setJwt] = useAtom(jwtAtom);
 
