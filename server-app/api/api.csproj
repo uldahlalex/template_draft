@@ -21,10 +21,6 @@
     <ItemGroup>
         <ProjectReference Include="..\Independent\Independent.csproj"/>
     </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="DependentHelpers\"/>
-    </ItemGroup>
-
+    
 
 </Project>

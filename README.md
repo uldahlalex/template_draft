@@ -5,6 +5,15 @@
 - No persistence abstraction
 - Feature-per-endpoint (iteration of vertical slicing)
 
+Server application:
+
+
+
+Client application:
+Dependency-Cruiser chart:
+![Dependency-Cruiser chart](./dependency-graph.svg)
+![Madge graph](./graph.png)
+
 ## Data schema:
 
 Can be found in directory `server-app/api/Boilerplate/DbHelpers/DbScripts.cs`
