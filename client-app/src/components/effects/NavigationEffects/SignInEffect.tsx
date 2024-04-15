@@ -1,9 +1,9 @@
 
 // Is triggered as soon as the localstorage token is set to a user
-import {jwtAtom, User, userAtom} from "../../../reusables/state/external.ts";
+import {jwtAtom, userAtom} from "../../../reusables/state/states.ts";
 import {useAtom} from "jotai";
 import {useEffect} from "react";
-import {decodeJwt} from "../../../reusables/logic/external.ts";
+import {decodeJwt} from "../../../reusables/logic/logic.ts";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
 

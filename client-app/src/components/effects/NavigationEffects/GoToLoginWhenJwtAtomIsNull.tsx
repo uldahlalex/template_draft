@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {jwtAtom} from "../../../reusables/state/external.ts";
+import {jwtAtom} from "../../../reusables/state/states.ts";
 
 
 

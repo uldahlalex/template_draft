@@ -2,7 +2,7 @@ import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useAtom} from "jotai/index";
 import toast from "react-hot-toast";
-import {userAtom, themeAtom, jwtAtom} from "../reusables/state/external.ts";
+import {userAtom, themeAtom, jwtAtom} from "../reusables/state/states.ts";
 
 export default function Header() {
 

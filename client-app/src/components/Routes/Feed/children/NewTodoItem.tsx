@@ -1,4 +1,4 @@
-import {http} from "../../../../reusables/logic/external.ts";
+import {http} from "../../../../reusables/logic/logic.ts";
 
 export default function NewTodoItem() {
 

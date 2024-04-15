@@ -1,5 +1,5 @@
 import {useAtom} from "jotai";
-import {themeAtom} from "../../../reusables/state/external.ts";
+import {themeAtom} from "../../../reusables/state/states.ts";
 import {useEffect} from "react";
 
 export default function ThemeChange() {

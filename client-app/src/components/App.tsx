@@ -7,8 +7,9 @@ import Feed from "./Routes/Feed/Feed.tsx";
 import SignInEffect from "./effects/NavigationEffects/SignInEffect.tsx";
 import ThemeChange from "./effects/UIEffects/ThemeChange.tsx";
 import Header from "./Header.tsx";
-import {HttpErrorInterceptor, HttpTokenSetterInterceptor} from "../reusables/logic/external.ts";
 import {DevTools} from "jotai-devtools";
+import {HttpTokenSetterInterceptor} from "./etc/HttpTokenSetterInterceptor.tsx";
+import {HttpErrorInterceptor} from "./etc/HttpErrorInterceptor.tsx";
 
 export default function App() {
 

@@ -1,8 +1,7 @@
 import {useState} from "react";
-import {decodeJwt, http} from "../../../reusables/logic/external.ts";
+import {decodeJwt, http} from "../../../reusables/logic/logic.ts";
 import {useAtom} from "jotai";
-import {jwtAtom, User, userAtom} from "../../../reusables/state/external.ts";
-import toast from "react-hot-toast";
+import {jwtAtom, userAtom} from "../../../reusables/state/states.ts";
 
 export default function Login() {
 
