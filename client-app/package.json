@@ -11,7 +11,8 @@
     "swagger": "npx swagger-typescript-api -p ../swagger.json -o ./httpclient -n Api.ts --axios",
     "deploy": "npm run swagger && npm run build && firebase deploy --only hosting",
     "depcruiseinit": "npx dependency-cruiser --init",
-    "depcruise": "npx depcruise src --include-only \"^src\" --output-type dot | dot -T svg > dependency-graph.svg"
+    "depcruise": "npx depcruise src --include-only \"^src\" --output-type dot | dot -T svg > dependency-graph.svg",
+    "madgegraph": " madge ./src/components/main.tsx --image graph.png"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",

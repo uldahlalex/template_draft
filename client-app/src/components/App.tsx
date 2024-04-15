@@ -4,11 +4,11 @@ import {Toaster} from "react-hot-toast";
 import GoToLoginWhenJwtAtomIsNull from "./effects/NavigationEffects/GoToLoginWhenJwtAtomIsNull.tsx";
 import HttpErrorInterceptor from "./effects/CommunicationEffects/HttpErrorInterceptor.tsx";
 import HttpTokenSetterInterceptor from "./effects/CommunicationEffects/HttpTokenSetterInterceptor.tsx";
-import Login from "./Routes/Login.tsx";
-import Feed from "./Routes/Feed.tsx";
+import Login from "./Routes/Login/Login.tsx";
+import Feed from "./Routes/Feed/Feed.tsx";
 import SignInEffect from "./effects/NavigationEffects/SignInEffect.tsx";
 import ThemeChange from "./effects/UIEffects/ThemeChange.tsx";
-import Header from "./Components/Header.tsx";
+import Header from "./Header.tsx";
 
 export default function App() {
 

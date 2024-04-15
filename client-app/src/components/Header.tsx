@@ -2,7 +2,7 @@ import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useAtom} from "jotai/index";
 import toast from "react-hot-toast";
-import {userAtom, themeAtom, jwtAtom} from "../../reusables/state/external.ts";
+import {userAtom, themeAtom, jwtAtom} from "../reusables/state/external.ts";
 
 export default function Header() {
 
@@ -79,7 +79,7 @@ export default function Header() {
                         }}>Demo to-do app for Programming II 2024</a></li>
                            <li><a onClick={() => {
                                 navigate('login');
-                            }}>Login</a></li>
+                            }}>Go To Login</a></li>
                     </ul>
                 </div>
             </div>

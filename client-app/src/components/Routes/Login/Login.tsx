@@ -1,7 +1,7 @@
 import {useState} from "react";
-import {http} from "../../reusables/logic/external.ts";
+import {http} from "../../../reusables/logic/external.ts";
 import {useAtom} from "jotai";
-import {jwtAtom} from "../../reusables/state/external.ts";
+import {jwtAtom} from "../../../reusables/state/external.ts";
 
 export default function Login() {
 

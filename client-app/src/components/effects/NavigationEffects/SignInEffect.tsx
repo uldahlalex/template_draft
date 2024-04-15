@@ -12,7 +12,8 @@ export default function SignInEffect() {
     const [, setUser] = useAtom(userAtom);
     const navigate = useNavigate();
 
-    //todo this is doing a lot
+    //todo this is doing a lot, maybe change to several different
+    //purposes: decoding and checking, setting user values to atom navigating and presenting toast all when jwt value changes
     useEffect(() => {
         if(jwt) {
             const decoded = decodeJwt(jwt);
