@@ -8,6 +8,7 @@ public static class HardcodedValues
 
     public static string JWT_KEY =
         "hdsfkyudsfksahfkdsahfffukdsafhkdsaufhidsafhkdsahfkdsahfiudsahfkdsahfkudsahfkudsahfkudsahfkudsahfkdsahfkuds";
+
     public static class Environments
     {
         public static string Production = nameof(Production);

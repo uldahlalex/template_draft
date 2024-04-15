@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using Agnostics.BusinessAgnostics;
 using Agnostics.GlobalModels;
-using api.DependentHelpers.BootstrappingHelpers.DbHelpers;
+using api.DependentHelpers.BootstrappingHelpers.DbHelper;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -12,8 +12,6 @@ namespace tests;
 [TestFixture]
 public class ApiTests
 {
-    private readonly TestSetup _setup = new();
-
     [SetUp]
     public void BeforeEachTest()
     {
@@ -21,6 +19,8 @@ public class ApiTests
         _setup.App.Services.GetService<DbScripts>()!.SeedDB();
         _setup.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(TestSetup.JwtForTestUser);
     }
+
+    private readonly TestSetup _setup = new();
 
     [Test]
     public void SignInTest()
@@ -36,7 +36,7 @@ public class ApiTests
     public async Task RegisterTest()
     {
         _setup.HttpClient.DefaultRequestHeaders.Authorization = null;
-        var u = new User()
+        var u = new User
         {
             Id = 42,
             Username = _setup.TestUser.Username + "2",

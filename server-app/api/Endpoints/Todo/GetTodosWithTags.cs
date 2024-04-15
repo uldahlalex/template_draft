@@ -22,7 +22,7 @@ public class GetTodosWithTags : ICarterModule
             [FromQuery] bool showCompleted,
             [FromQuery] int limit = 50) =>
         {
-            var user = HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
+            var user = context.VerifyJwtReturnPayloadAsT<User>(Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
 
             var tags = JsonSerializer.Deserialize<int[]>(serializedTagArray);
             IEnumerable<dynamic> todos;

@@ -22,7 +22,8 @@ public class Createtag : ICarterModule
             HttpContext context,
             [FromServices] NpgsqlDataSource ds) =>
         {
-            User user = HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT));
+            var user = context.VerifyJwtReturnPayloadAsT<User>(
+                Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT));
             using (var conn = ds.OpenConnection())
             {
                 var insertedTag = conn.QueryFirst<Agnostics.GlobalModels.Tag>(
@@ -32,7 +33,7 @@ public class Createtag : ICarterModule
                         name = dto.Name,
                         userid = user.Id
                     }) ?? throw new InvalidOperationException("Could not create tag");
-               
+
                 return insertedTag;
             }
         });

@@ -13,7 +13,7 @@ public class DeleteTag : ICarterModule
     {
         app.MapDelete("api/tag/{id}", (int id, HttpContext context, NpgsqlDataSource ds) =>
         {
-            HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
+            context.VerifyJwtReturnPayloadAsT<User>(Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
             using var conn = ds.OpenConnection();
             var impactedRows = conn.Execute("delete from todo_manager.todo where id = @id", new { id });
             if (impactedRows == 0) throw new InvalidOperationException("Could not delete");

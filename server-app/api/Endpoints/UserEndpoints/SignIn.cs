@@ -30,11 +30,12 @@ public class SignIn : ICarterModule
             if (CredentialService.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
                 throw new InvalidOperationException("Invalid sign-in");
 
-            return new AuthenticationResponseDto()
+            return new AuthenticationResponseDto
             {
                 token = TokenService.IssueJwt([
-                    new KeyValuePair<string, object>(nameof(userToCheck.Username), userToCheck.Username), 
-                    new KeyValuePair<string, object>(nameof(userToCheck.Id), userToCheck.Id)], Environment.GetEnvironmentVariable(KeyNames.JWT_KEY))
+                    new KeyValuePair<string, object>(nameof(userToCheck.Username), userToCheck.Username),
+                    new KeyValuePair<string, object>(nameof(userToCheck.Id), userToCheck.Id)
+                ], Environment.GetEnvironmentVariable(KeyNames.JWT_KEY))
             };
         });
     }

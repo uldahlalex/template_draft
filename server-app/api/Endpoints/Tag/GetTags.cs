@@ -13,7 +13,7 @@ public class GetTags : ICarterModule
     {
         app.MapGet("/api/tags", (NpgsqlDataSource ds, HttpContext context) =>
             {
-                HttpContextExtensions.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
+                context.VerifyJwtReturnPayloadAsT<User>(Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
 
                 List<Agnostics.GlobalModels.Tag> tags;
                 using (var conn = ds.OpenConnection())

@@ -19,7 +19,7 @@ public static class HttpContextExtensions
                 .MustVerifySignature()
                 .Decode<IDictionary<string, object>>(jwt);
 
-            return JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(token), new JsonSerializerOptions()
+            return JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(token), new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = false
             }) ?? throw new InvalidOperationException("Could not deserialize to " + typeof(T).Name);

@@ -19,7 +19,6 @@ public class Create : ICarterModule
             [FromServices] NpgsqlDataSource ds,
             HttpContext context) =>
         {
-   
             var user = context.VerifyJwtReturnPayloadAsT<User>(Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
             req.ValidateModel();
             var transaction = ds.OpenConnection().BeginTransaction();
@@ -55,8 +54,8 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
 
 public class CreateTodoRequestDto
 {
-    [NotNull][MinLength(1)]
-    public string Title { get; set; } = default!;
+    [NotNull] [MinLength(1)] public string Title { get; set; } = default!;
+
     public string Description { get; set; } = default!;
     public DateTime DueDate { get; set; }
     public int Priority { get; set; }
