@@ -1,8 +1,8 @@
-using Agnostics.GlobalModels;
-using Agnostics.KeysAndValues;
-using api.DependentHelpers.EndpointHelpers.Security;
+using Agnostics;
+using api.Independent.KeysAndValues;
 using Carter;
 using Dapper;
+using EndpointHelpers.Security;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -20,7 +20,7 @@ public class Register : ICarterModule
     {
         app.MapPost("/api/register",
             ([FromBody] AuthenticationRequestDto req, [FromServices] NpgsqlDataSource ds,
-                [FromServices] TokenService tokenservice) =>
+                [FromServices] UtilitiesFacade utilitiesFacade) =>
             {
                 var salt = CredentialService.GenerateSalt();
                 var hash = CredentialService.Hash(req.Password, salt);
@@ -37,7 +37,7 @@ public class Register : ICarterModule
 
                 return new AuthenticationResponseDto
                 {
-                    token = TokenService.IssueJwt([
+                    token = utilitiesFacade.TokenService.IssueJwt([
                         new KeyValuePair<string, object>(nameof(user.Username), user.Username),
                         new KeyValuePair<string, object>(nameof(user.Id), user.Id)
                     ], Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!)

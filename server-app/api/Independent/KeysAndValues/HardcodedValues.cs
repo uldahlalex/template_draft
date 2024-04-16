@@ -1,4 +1,4 @@
-namespace Agnostics.KeysAndValues;
+namespace api.Independent.KeysAndValues;
 
 public static class HardcodedValues
 {

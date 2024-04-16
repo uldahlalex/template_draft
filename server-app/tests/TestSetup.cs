@@ -1,6 +1,6 @@
-using Agnostics.GlobalModels;
+using Agnostics;
 using api;
-using api.DependentHelpers.EndpointHelpers.Security;
+using EndpointHelpers.Security;
 using Microsoft.AspNetCore.Builder;
 
 namespace tests;

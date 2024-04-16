@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace api.DependentHelpers.EndpointHelpers.Security;
+namespace EndpointHelpers.Security;
 
 public class CredentialService
 {

@@ -2,8 +2,9 @@ using System.Security.Authentication;
 using System.Text.Json;
 using JWT.Algorithms;
 using JWT.Builder;
+using Microsoft.AspNetCore.Http;
 
-namespace api.DependentHelpers.EndpointHelpers.EndpointHelpers;
+namespace EndpointHelpers.EndpointHelpers;
 
 public static class HttpContextExtensions
 {

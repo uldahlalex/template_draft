@@ -1,8 +1,8 @@
-using Agnostics.GlobalModels;
-using Agnostics.KeysAndValues;
-using api.DependentHelpers.EndpointHelpers.EndpointHelpers;
+using Agnostics;
+using api.Independent.KeysAndValues;
 using Carter;
 using Dapper;
+using EndpointHelpers.EndpointHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -26,7 +26,7 @@ public class Createtag : ICarterModule
                 Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT));
             using (var conn = ds.OpenConnection())
             {
-                var insertedTag = conn.QueryFirst<Agnostics.GlobalModels.Tag>(
+                var insertedTag = conn.QueryFirst<Agnostics.Tag>(
                     "insert into todo_manager.tag (name, userid) values (@name, @userid) returning *;",
                     new
                     {

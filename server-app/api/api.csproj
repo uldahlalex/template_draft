@@ -19,7 +19,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Independent\Independent.csproj"/>
+        <ProjectReference Include="..\EndpointHelpers\EndpointHelpers.csproj" />
+        <ProjectReference Include="..\GlobalModels\GlobalModels.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="DependentHelpers\EndpointHelpers\" />
+      <Folder Include="Independent\" />
+      <Folder Include="Independent\GlobalModels\" />
     </ItemGroup>
     
 

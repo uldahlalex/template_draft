@@ -6,9 +6,9 @@ using Npgsql;
 
 namespace api.DependentHelpers.BootstrappingHelpers.DbHelper;
 
-public static class BuildDbContainer
+public class BuildDbContainer
 {
-    public static async Task StartDbInContainer(string postgresConnectionString)
+    public async Task StartDbInContainer(string postgresConnectionString)
     {
         try
         {

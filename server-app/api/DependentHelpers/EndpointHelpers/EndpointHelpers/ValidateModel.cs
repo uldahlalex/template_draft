@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace api.DependentHelpers.EndpointHelpers.EndpointHelpers;
+namespace EndpointHelpers.EndpointHelpers;
 
 public static class ValidateModelExtension
 {

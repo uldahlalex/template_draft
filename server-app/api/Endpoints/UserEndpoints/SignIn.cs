@@ -1,8 +1,8 @@
-using Agnostics.GlobalModels;
-using Agnostics.KeysAndValues;
-using api.DependentHelpers.EndpointHelpers.Security;
+using Agnostics;
+using api.Independent.KeysAndValues;
 using Carter;
 using Dapper;
+using EndpointHelpers.Security;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -16,7 +16,8 @@ public class SignIn : ICarterModule
             [FromBody] AuthenticationRequestDto req,
             [FromServices] NpgsqlDataSource ds,
             [FromServices] CredentialService credService,
-            [FromServices] TokenService tokenService) =>
+            [FromServices] UtilitiesFacade utilitiesFacade
+            ) =>
         {
             using var conn = ds.OpenConnection();
             var userToCheck = conn.QueryFirstOrDefault<User>(
@@ -32,7 +33,7 @@ public class SignIn : ICarterModule
 
             return new AuthenticationResponseDto
             {
-                token = TokenService.IssueJwt([
+                token = utilitiesFacade.TokenService.IssueJwt([
                     new KeyValuePair<string, object>(nameof(userToCheck.Username), userToCheck.Username),
                     new KeyValuePair<string, object>(nameof(userToCheck.Id), userToCheck.Id)
                 ], Environment.GetEnvironmentVariable(KeyNames.JWT_KEY))

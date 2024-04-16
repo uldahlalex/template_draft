@@ -1,4 +1,4 @@
-namespace Agnostics.GlobalModels;
+namespace Agnostics;
 
 public class Tag
 {

@@ -1,11 +1,10 @@
 using System.Net;
 using System.Security.Authentication;
 using System.Text.Json;
-using Agnostics.KeysAndValues;
-using api.DependentHelpers.BootstrappingHelpers.DbHelper;
-using api.DependentHelpers.BootstrappingHelpers.Documentation;
-using api.DependentHelpers.EndpointHelpers.Security;
+using api.DependentHelpers.BootstrappingHelpers;
+using api.Independent.KeysAndValues;
 using Carter;
+using EndpointHelpers.Security;
 using FluentValidation;
 
 namespace api;
@@ -15,12 +14,7 @@ public class Program
     public static async Task Main()
     {
         var app = await Startup();
-        if (!Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT)
-                .Equals(HardcodedValues.Environments.Production))
-        {
-            app.Services.GetService<DbScripts>()!.RebuildDbSchema();
-            app.Services.GetService<DbScripts>()!.SeedDB();
-        }
+        
 
         app.Run();
     }
@@ -36,24 +30,21 @@ public class Program
         Console.WriteLine("BUILDING API WITH ENVIRONMENT: +" +
                           JsonSerializer.Serialize(Environment.GetEnvironmentVariables()));
 
-        var skip = Environment.GetEnvironmentVariable(KeyNames.SKIP_DB_CONTAINER_BUILDING) ?? "false";
-        if (!skip.Equals("true"))
-            await BuildDbContainer.StartDbInContainer(Environment.GetEnvironmentVariable(KeyNames.PG_CONN) ??
-                                                      HardcodedValues.LOCAL_POSTGRES);
+
 
         var builder = WebApplication.CreateBuilder();
         builder.Services
             .AddProblemDetails()
             .AddNpgsqlDataSource(HardcodedValues.LOCAL_POSTGRES, cfg => cfg.EnableParameterLogging())
-            .AddSingleton<DbScripts>()
             .AddSingleton<CredentialService>()
             .AddSingleton<TokenService>()
+            .AddSingleton<UtilitiesFacade>()
+            .AddBootstrappingFacade()
             .AddCarter()
             .AddCors()
-            .AddEndpointsApiExplorer()
-            .AddSwaggerDefinition();
+            .AddEndpointsApiExplorer();
         builder.Services.AddHostedService<SwaggerJsonGeneratorService>();
-
+       
         if (Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT)
             .Equals(HardcodedValues.Environments.Testing))
             builder.WebHost.UseUrls("http://localhost:9999");
@@ -103,7 +94,11 @@ public class Program
                     .AllowCredentials();
             });
         app.MapCarter();
-
+        var skip = Environment.GetEnvironmentVariable(KeyNames.SKIP_DB_CONTAINER_BUILDING) ?? "false";
+        if (!skip.Equals("true"))
+            await app.Services.GetService<BuildDbContainer>()
+                .StartDbInContainer(Environment.GetEnvironmentVariable(KeyNames.PG_CONN) ??
+                                                      HardcodedValues.LOCAL_POSTGRES);
         return app;
     }
 }

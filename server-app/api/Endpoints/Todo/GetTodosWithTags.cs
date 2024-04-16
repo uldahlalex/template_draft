@@ -1,9 +1,9 @@
 using System.Text.Json;
-using Agnostics.GlobalModels;
-using Agnostics.KeysAndValues;
-using api.DependentHelpers.EndpointHelpers.EndpointHelpers;
+using Agnostics;
+using api.Independent.KeysAndValues;
 using Carter;
 using Dapper;
+using EndpointHelpers.EndpointHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -69,7 +69,7 @@ LIMIT {limit};
                     CreatedAt = row.createdat,
                     Priority = row.priority,
                     UserId = row.userid,
-                    Tags = JsonSerializer.Deserialize<List<Agnostics.GlobalModels.Tag>>(row.tags)
+                    Tags = JsonSerializer.Deserialize<List<Agnostics.Tag>>(row.tags)
                 };
 
                 return todo;

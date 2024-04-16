@@ -1,11 +1,12 @@
 using JWT.Algorithms;
 using JWT.Builder;
 
-namespace api.DependentHelpers.EndpointHelpers.Security;
+namespace EndpointHelpers.Security;
 
-public class TokenService
+
+public class TokenService 
 {
-    public static string IssueJwt(IEnumerable<KeyValuePair<string, object>> claims, string privateKey)
+    public string IssueJwt(IEnumerable<KeyValuePair<string, object>> claims, string privateKey)
     {
         try
         {

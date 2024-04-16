@@ -1,8 +1,8 @@
-using Agnostics.GlobalModels;
-using Agnostics.KeysAndValues;
-using api.DependentHelpers.EndpointHelpers.EndpointHelpers;
+using Agnostics;
+using api.Independent.KeysAndValues;
 using Carter;
 using Dapper;
+using EndpointHelpers.EndpointHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 

@@ -1,11 +1,11 @@
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
-namespace api.DependentHelpers.BootstrappingHelpers.Documentation;
+namespace api.DependentHelpers.BootstrappingHelpers.Documentatio;
 
-public static class SwaggerDefinition
+public class SwaggerDefinition
 {
-    public static void AddSwaggerDefinition(this IServiceCollection services)
+    public void AddSwaggerDefinition(IServiceCollection services)
     {
         services.AddSwaggerGen(c =>
         {
