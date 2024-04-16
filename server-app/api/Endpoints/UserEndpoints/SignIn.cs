@@ -20,8 +20,7 @@ public class SignIn : ICarterModule
             [FromBody] SignInDto req,
             [FromServices] NpgsqlDataSource ds,
             [FromServices] CredentialService credService,
-            [FromServices] IndependentHelpersFacade indep,
-            [FromServices] ApiHelperFacade utilitiesFacade
+            [FromServices] EndpointHelperFacade helpers
             ) =>
         {
             using var conn = ds.OpenConnection();
@@ -33,15 +32,15 @@ public class SignIn : ICarterModule
                 }) ?? throw new InvalidOperationException("Invalid sign-in");
             conn.Close();
 
-            if (utilitiesFacade.CredentialService.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
+            if (helpers.CredentialService.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
                 throw new InvalidOperationException("Invalid sign-in");
 
             return new AuthenticationResponseDto
             {
-                token = utilitiesFacade.TokenService.IssueJwt([
+                token = helpers.TokenService.IssueJwt([
                     new KeyValuePair<string, object>(nameof(userToCheck.Username), userToCheck.Username),
                     new KeyValuePair<string, object>(nameof(userToCheck.Id), userToCheck.Id)
-                ], Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!),
+                ], Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!),
             };
         });
     }

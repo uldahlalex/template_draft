@@ -23,13 +23,12 @@ public class Create : ICarterModule
     {
         app.MapPost("/api/todos", (
             [FromBody] CreateTodoRequestDto req,
-            ApiHelperFacade apiHelpers,
-            IndependentHelpersFacade indep,
+            EndpointHelperFacade helpers,
             [FromServices] NpgsqlDataSource ds,
             HttpContext context) =>
         {
-            var user = apiHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
-            apiHelpers.EndpointUtilities.ValidateModel(req);
+            var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+            helpers.EndpointUtilities.ValidateModel(req);
             var transaction = ds.OpenConnection().BeginTransaction();
             var todo = transaction.Connection!.QueryFirstOrDefault<TodoWithTags>(@"
 insert into todo_manager.todo (title, description, duedate, userid, priority)

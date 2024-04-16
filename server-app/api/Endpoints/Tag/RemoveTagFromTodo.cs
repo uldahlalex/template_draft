@@ -13,12 +13,11 @@ public class RemoveTagToTodo : ICarterModule
         app.MapDelete("/api/tags/{tagId}/removeFromTodo/{todoId}",
             (HttpContext context,
                 [FromServices] NpgsqlDataSource dataSource,
-                [FromServices] ApiHelperFacade epHelpers,
-                [FromServices] IndependentHelpersFacade indep,
+                [FromServices] EndpointHelperFacade helpers,
                 [FromRoute] int tagId,
                 [FromRoute] int todoId) =>
             {
-                var user = epHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
+                var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
 
                 var sql = @"
 DELETE FROM todo_manager.todo_tag

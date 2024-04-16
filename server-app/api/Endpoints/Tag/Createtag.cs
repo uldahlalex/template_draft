@@ -1,6 +1,5 @@
 using Carter;
 using Dapper;
-using IndependentHelpers.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -18,12 +17,11 @@ public class Createtag : ICarterModule
         app.MapPost("api/tags", (
             [FromBody] CreateTagRequestDto dto,
             HttpContext context,
-            [FromServices] IndependentHelpersFacade indep,
-            [FromServices] ApiHelperFacade epHelpers,
+            [FromServices] EndpointHelperFacade helpers,
             [FromServices] NpgsqlDataSource ds) =>
         {
-            var user = epHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context,
-                Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
+            var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context,
+                Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
 
             using (var conn = ds.OpenConnection())
             {

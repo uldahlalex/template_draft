@@ -21,12 +21,11 @@ public class UpdateTodo : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPut("/api/todos/{id}", (UpdateTodoRequestDto req,
-            [FromServices] ApiHelperFacade apiHelpers,
-            [FromServices] IndependentHelpersFacade indep,
+            [FromServices] EndpointHelperFacade helpers,
             NpgsqlDataSource ds, HttpContext context) =>
         {
-            var user = apiHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context,
-                Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
+            var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+
 
             var conn = ds.OpenConnection();
             var userId = 1;

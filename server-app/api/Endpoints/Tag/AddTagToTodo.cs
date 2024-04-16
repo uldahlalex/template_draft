@@ -13,12 +13,11 @@ public class AddTagToTodo : ICarterModule
         app.MapPost("/api/tags/{tagId}/addToTodo/{todoId}",
             (HttpContext context,
                 [FromServices] NpgsqlDataSource dataSource,
-                [FromServices] ApiHelperFacade epHelpers,
-                [FromServices] IndependentHelpersFacade indep,
+                [FromServices] EndpointHelperFacade helpers,
                 [FromRoute] int tagId,
-                [FromRouteAttribute] int todoId) =>
+                [FromRoute] int todoId) =>
             {
-                epHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
+                helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
                 var sql = @"
 INSERT INTO todo_manager.todo_tag (todoid, tagid)
 VALUES (@todoId, @tagId);";
@@ -28,8 +27,6 @@ VALUES (@todoId, @tagId);";
                     if (execution == 0)
                         throw new InvalidOperationException("Could not add tag to todo.");
                 }
-
-
                 return new { success = true };
             });
     }

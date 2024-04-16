@@ -10,11 +10,10 @@ public class Delete : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapDelete("api/todo/{id}", (int id, HttpContext context,
-            ApiHelperFacade apiHelpers, 
-            IndependentHelpersFacade indep,
+            EndpointHelperFacade helpers, 
             NpgsqlDataSource ds) =>
         {
-            var user = apiHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
+            var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
 
             using (var conn = ds.OpenConnection())
             {

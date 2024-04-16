@@ -14,15 +14,14 @@ public class GetTodosWithTags : ICarterModule
         app.MapGet("/api/todos", async (
             HttpContext context,
             [FromServices] NpgsqlDataSource ds,
-            [FromServices] ApiHelperFacade apiHelpers,
-            [FromServices] IndependentHelpersFacade indep,
+            [FromServices] EndpointHelperFacade helpers,
             [FromQuery] string serializedTagArray,
             [FromQuery] string orderBy,
             [FromQuery] string direction,
             [FromQuery] bool showCompleted,
             [FromQuery] int limit = 50) =>
         {
-            var user = apiHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
+            var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
 
             var tags = JsonSerializer.Deserialize<int[]>(serializedTagArray);
             IEnumerable<dynamic> todos;
