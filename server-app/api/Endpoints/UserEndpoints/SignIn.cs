@@ -10,10 +10,15 @@ namespace api.Endpoints.UserEndpoints;
 
 public class SignIn : ICarterModule
 {
+    private class SignInDto
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/signin", (
-            [FromBody] AuthenticationRequestDto req,
+            [FromBody] SignInDto req,
             [FromServices] NpgsqlDataSource ds,
             [FromServices] CredentialService credService,
             [FromServices] IndependentHelpers indep,

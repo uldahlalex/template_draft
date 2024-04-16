@@ -8,18 +8,19 @@ using Npgsql;
 
 namespace api.Endpoints.UserEndpoints;
 
-public class AuthenticationRequestDto
-{
-    public string Username { get; set; }
-    public string Password { get; set; }
-}
 
 public class Register : ICarterModule
 {
+    private class RegisterDto
+ {
+     public string Username { get; set; }
+     public string Password { get; set; }
+ }
+
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/register",
-            ([FromBody] AuthenticationRequestDto req, [FromServices] NpgsqlDataSource ds,
+            ([FromBody] RegisterDto req, [FromServices] NpgsqlDataSource ds,
                 [FromServices] IndependentHelpers indep,
                 [FromServices]ApiHelperFacade apiHelper) =>
             {

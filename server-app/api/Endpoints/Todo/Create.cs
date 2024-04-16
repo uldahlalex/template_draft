@@ -12,6 +12,15 @@ namespace api.Endpoints.Todo;
 
 public class Create : ICarterModule
 {
+    private class CreateTodoRequestDto
+    {
+        [NotNull] [MinLength(1)] public string Title { get; set; } = default!;
+
+        public string Description { get; set; } = default!;
+        public DateTime DueDate { get; set; }
+        public int Priority { get; set; }
+        public List<Globals.Domain.Tag> Tags { get; set; } = default!;
+    }
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/todos", (
@@ -54,12 +63,3 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
     }
 }
 
-public class CreateTodoRequestDto
-{
-    [NotNull] [MinLength(1)] public string Title { get; set; } = default!;
-
-    public string Description { get; set; } = default!;
-    public DateTime DueDate { get; set; }
-    public int Priority { get; set; }
-    public List<Globals.Domain.Tag> Tags { get; set; } = default!;
-}

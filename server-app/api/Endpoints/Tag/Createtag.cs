@@ -8,13 +8,13 @@ using Npgsql;
 
 namespace api.Endpoints.Tag;
 
-public class CreateTagRequestDto
-{
-    public string Name { get; set; }
-}
-
 public class Createtag : ICarterModule
 {
+    private class CreateTagRequestDto
+    {
+        public string Name { get; set; }
+    }
+
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("api/tags", (
@@ -24,7 +24,8 @@ public class Createtag : ICarterModule
             [FromServices] ApiHelperFacade epHelpers,
             [FromServices] NpgsqlDataSource ds) =>
         {
-            var user = epHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
+            var user = epHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context,
+                Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
 
             using (var conn = ds.OpenConnection())
             {
