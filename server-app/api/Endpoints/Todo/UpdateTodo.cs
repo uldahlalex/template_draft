@@ -1,8 +1,6 @@
-using api.DependentHelpers.ApiHelpers;
-using api.Globals.Domain;
-using api.Independent;
 using Carter;
 using Dapper;
+using IndependentHelpers.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -24,7 +22,7 @@ public class UpdateTodo : ICarterModule
     {
         app.MapPut("/api/todos/{id}", (UpdateTodoRequestDto req,
             [FromServices] ApiHelperFacade apiHelpers,
-            [FromServices] IndependentHelpers indep,
+            [FromServices] IndependentHelpersFacade indep,
             NpgsqlDataSource ds, HttpContext context) =>
         {
             var user = apiHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context,

@@ -1,8 +1,7 @@
-using api.DependentHelpers.ApiHelpers;
-using api.Globals.Domain;
-using api.Independent;
 using Carter;
 using Dapper;
+using IndependentHelpers;
+using IndependentHelpers.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -21,7 +20,7 @@ public class SignIn : ICarterModule
             [FromBody] SignInDto req,
             [FromServices] NpgsqlDataSource ds,
             [FromServices] CredentialService credService,
-            [FromServices] IndependentHelpers indep,
+            [FromServices] IndependentHelpersFacade indep,
             [FromServices] ApiHelperFacade utilitiesFacade
             ) =>
         {

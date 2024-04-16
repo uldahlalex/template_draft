@@ -1,9 +1,12 @@
-namespace api.Independent;
+using IndependentHelpers;
 
-public class IndependentHelpers(KeyNames keyNames, HardcodedValues hardcodedValues)
+namespace api;
+
+public class IndependentHelpersFacade(KeyNames keyNames, HardcodedValues hardcodedValues, CredentialService credentialService)
 {
       public KeyNames KeyNames { get; } = keyNames;
       public HardcodedValues HardcodedValues { get; } = hardcodedValues;
+      public CredentialService CredentialService { get; } = credentialService;
 }
 
 public static class IndepdentHelpersFacadeExtensions
@@ -12,7 +15,8 @@ public static class IndepdentHelpersFacadeExtensions
       {
             services.AddSingleton<KeyNames>();
             services.AddSingleton<HardcodedValues>();
-            services.AddSingleton<IndependentHelpers>();
+            services.AddSingleton<CredentialService>();
+            services.AddSingleton<IndependentHelpersFacade>();
             return services;
       }
 }

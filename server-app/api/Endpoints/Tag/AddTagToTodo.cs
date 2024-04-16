@@ -1,8 +1,6 @@
-using api.DependentHelpers.ApiHelpers;
-using api.Globals.Domain;
-using api.Independent;
 using Carter;
 using Dapper;
+using IndependentHelpers.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -16,7 +14,7 @@ public class AddTagToTodo : ICarterModule
             (HttpContext context,
                 [FromServices] NpgsqlDataSource dataSource,
                 [FromServices] ApiHelperFacade epHelpers,
-                [FromServices] IndependentHelpers indep,
+                [FromServices] IndependentHelpersFacade indep,
                 [FromRoute] int tagId,
                 [FromRouteAttribute] int todoId) =>
             {

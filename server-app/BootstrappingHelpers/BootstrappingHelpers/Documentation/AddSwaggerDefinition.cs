@@ -1,7 +1,8 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
-namespace api.DependentHelpers.BootstrappingHelpers.Documentation;
+namespace BootstrappingHelpers.BootstrappingHelpers.Documentation;
 
 public class SwaggerDefinition
 {

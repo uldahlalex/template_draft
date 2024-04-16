@@ -1,7 +1,7 @@
-using api.DependentHelpers.BootstrappingHelpers.DbHelper;
-using api.DependentHelpers.BootstrappingHelpers.Documentation;
+using BootstrappingHelpers.BootstrappingHelpers.DbHelper;
+using BootstrappingHelpers.BootstrappingHelpers.Documentation;
 
-namespace api.DependentHelpers.BootstrappingHelpers;
+namespace api;
 
 public class BootstrappingFacade(BuildDbContainer buildDbContainer, DbScripts dbScripts, SwaggerDefinition swaggerDefinition, SwaggerJsonGeneratorService swaggerJsonGeneratorService)
 {
@@ -52,9 +52,10 @@ public static class BootstrappingFacadeExtensions
         
         services.AddSingleton<BuildDbContainer>();
         services.AddSingleton<DbScripts>();
-        services.AddSingleton<SwaggerDefinition>();
-        services.AddSingleton<BootstrappingFacade>();
+        services.AddSingleton<SwaggerDefinition>();   
         services.AddHostedService<SwaggerJsonGeneratorService>(); //todo hosted service diff
+
+        services.AddSingleton<BootstrappingFacade>();
         
         
         

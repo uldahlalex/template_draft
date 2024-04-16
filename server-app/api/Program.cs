@@ -1,6 +1,3 @@
-using api.DependentHelpers.ApiHelpers;
-using api.DependentHelpers.BootstrappingHelpers;
-using api.Independent;
 using Carter;
 
 namespace api;

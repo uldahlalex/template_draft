@@ -1,8 +1,6 @@
-using api.DependentHelpers.ApiHelpers;
-using api.Globals.Domain;
-using api.Independent;
 using Carter;
 using Dapper;
+using IndependentHelpers.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -21,7 +19,7 @@ public class Register : ICarterModule
     {
         app.MapPost("/api/register",
             ([FromBody] RegisterDto req, [FromServices] NpgsqlDataSource ds,
-                [FromServices] IndependentHelpers indep,
+                [FromServices] IndependentHelpersFacade indep,
                 [FromServices]ApiHelperFacade apiHelper) =>
             {
                 var salt = apiHelper.CredentialService.GenerateSalt();

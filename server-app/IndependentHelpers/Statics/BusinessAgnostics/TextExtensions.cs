@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace api.Statics.BusinessAgnostics;
+namespace IndependentHelpers.Statics.BusinessAgnostics;
 
 public static class TextExtensions
 {

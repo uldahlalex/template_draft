@@ -1,9 +1,7 @@
 using System.Text.Json;
-using api.DependentHelpers.ApiHelpers;
-using api.Globals.Domain;
-using api.Independent;
 using Carter;
 using Dapper;
+using IndependentHelpers.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -17,7 +15,7 @@ public class GetTodosWithTags : ICarterModule
             HttpContext context,
             [FromServices] NpgsqlDataSource ds,
             [FromServices] ApiHelperFacade apiHelpers,
-            [FromServices] IndependentHelpers indep,
+            [FromServices] IndependentHelpersFacade indep,
             [FromQuery] string serializedTagArray,
             [FromQuery] string orderBy,
             [FromQuery] string direction,
@@ -71,7 +69,7 @@ LIMIT {limit};
                     CreatedAt = row.createdat,
                     Priority = row.priority,
                     UserId = row.userid,
-                    Tags = JsonSerializer.Deserialize<List<Globals.Domain.Tag>>(row.tags)
+                    Tags = JsonSerializer.Deserialize<List<IndependentHelpers.Domain.Tag>>(row.tags)
                 };
 
                 return todo;

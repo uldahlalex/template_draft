@@ -1,9 +1,9 @@
 ﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using api.DependentHelpers.BootstrappingHelpers.DbHelper;
-using api.Globals.Domain;
-using api.Statics.BusinessAgnostics;
+using BootstrappingHelpers.BootstrappingHelpers.DbHelper;
 using FluentAssertions;
+using IndependentHelpers.Domain;
+using IndependentHelpers.Statics.BusinessAgnostics;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 

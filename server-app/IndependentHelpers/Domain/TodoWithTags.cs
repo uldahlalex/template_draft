@@ -1,4 +1,4 @@
-namespace api.Globals.Domain;
+namespace IndependentHelpers.Domain;
 
 public class TodoWithTags
 {

@@ -1,4 +1,4 @@
-namespace api.Independent;
+namespace IndependentHelpers;
 
 
 public  class HardcodedValues

@@ -1,8 +1,6 @@
-using api.DependentHelpers.ApiHelpers;
-using api.Globals.Domain;
-using api.Independent;
 using Carter;
 using Dapper;
+using IndependentHelpers.Domain;
 using Npgsql;
 
 namespace api.Endpoints.Tag;
@@ -13,7 +11,7 @@ public class DeleteTag : ICarterModule
     {
         app.MapDelete("api/tag/{id}", (int id, 
             ApiHelperFacade apiHelpers,
-            IndependentHelpers indep,
+            IndependentHelpersFacade indep,
             HttpContext context, NpgsqlDataSource ds) =>
         {
             var user = apiHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);

@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace api.DependentHelpers.BootstrappingHelpers.Documentation;
+namespace BootstrappingHelpers.BootstrappingHelpers.Documentation;
 
 public class SwaggerJsonGeneratorService(IServiceProvider serviceProvider) : BackgroundService
 {

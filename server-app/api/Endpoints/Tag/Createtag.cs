@@ -1,8 +1,6 @@
-using api.DependentHelpers.ApiHelpers;
-using api.Globals.Domain;
-using api.Independent;
 using Carter;
 using Dapper;
+using IndependentHelpers.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -20,7 +18,7 @@ public class Createtag : ICarterModule
         app.MapPost("api/tags", (
             [FromBody] CreateTagRequestDto dto,
             HttpContext context,
-            [FromServices] IndependentHelpers indep,
+            [FromServices] IndependentHelpersFacade indep,
             [FromServices] ApiHelperFacade epHelpers,
             [FromServices] NpgsqlDataSource ds) =>
         {
@@ -29,7 +27,7 @@ public class Createtag : ICarterModule
 
             using (var conn = ds.OpenConnection())
             {
-                var insertedTag = conn.QueryFirst<Globals.Domain.Tag>(
+                var insertedTag = conn.QueryFirst<IndependentHelpers.Domain.Tag>(
                     "insert into todo_manager.tag (name, userid) values (@name, @userid) returning *;",
                     new
                     {

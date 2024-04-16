@@ -3,8 +3,9 @@ using System.Security.Authentication;
 using System.Text.Json;
 using JWT.Algorithms;
 using JWT.Builder;
+using Microsoft.AspNetCore.Http;
 
-namespace api.DependentHelpers.ApiHelpers;
+namespace ApiHelpers.ApiHelpers;
 
 public class EndpointHelpers
 {
