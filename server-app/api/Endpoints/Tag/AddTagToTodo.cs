@@ -1,6 +1,6 @@
 using Carter;
 using Dapper;
-using IndependentHelpers.Domain;
+using Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -13,11 +13,11 @@ public class AddTagToTodo : ICarterModule
         app.MapPost("/api/tags/{tagId}/addToTodo/{todoId}",
             (HttpContext context,
                 [FromServices] NpgsqlDataSource dataSource,
-                [FromServices] EndpointHelperFacade helpers,
+                [FromServices] ApiHelperFacade helpers,
                 [FromRoute] int tagId,
                 [FromRoute] int todoId) =>
             {
-                helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+                helpers.Security.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
                 var sql = @"
 INSERT INTO todo_manager.todo_tag (todoid, tagid)
 VALUES (@todoId, @tagId);";

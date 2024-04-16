@@ -17,15 +17,15 @@ public class Createtag : ICarterModule
         app.MapPost("api/tags", (
             [FromBody] CreateTagRequestDto dto,
             HttpContext context,
-            [FromServices] EndpointHelperFacade helpers,
+            [FromServices] ApiHelperFacade helpers,
             [FromServices] NpgsqlDataSource ds) =>
         {
-            var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context,
+            var user = helpers.Security.VerifyJwtReturnPayloadAsT<User>(context,
                 Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
 
             using (var conn = ds.OpenConnection())
             {
-                var insertedTag = conn.QueryFirst<IndependentHelpers.Domain.Tag>(
+                var insertedTag = conn.QueryFirst<Core.Domain.Tag>(
                     "insert into todo_manager.tag (name, userid) values (@name, @userid) returning *;",
                     new
                     {

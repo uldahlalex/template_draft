@@ -2,17 +2,13 @@ using ApiHelpers.ApiHelpers;
 
 namespace api;
 
-public class EndpointHelperFacade(
-    HardcodedValues hardcodedValues,
+public class ApiHelperFacade(
+    Values values,
     KeyNames keyNames,
-    TokenService tokenService, 
-    CredentialService credentialService, 
-    EndpointHelpers endpointUtilities)
+    Security security)
 {
-    public TokenService TokenService { get; } = tokenService;
-    public CredentialService CredentialService { get; } = credentialService;
-    public EndpointHelpers EndpointUtilities { get; } = endpointUtilities;
-    public HardcodedValues HardcodedValues { get; } = hardcodedValues;
+    public Security Security { get; } = security;
+    public Values Values { get; } = values;
     public KeyNames KeyNames { get; } = keyNames;
     
 }

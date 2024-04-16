@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using Carter;
 using Dapper;
-using IndependentHelpers.Domain;
+using Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -17,18 +17,18 @@ public class Create : ICarterModule
         public string Description { get; set; } = default!;
         public DateTime DueDate { get; set; }
         public int Priority { get; set; }
-        public List<IndependentHelpers.Domain.Tag> Tags { get; set; } = default!;
+        public List<Core.Domain.Tag> Tags { get; set; } = default!;
     }
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/todos", (
             [FromBody] CreateTodoRequestDto req,
-            EndpointHelperFacade helpers,
+            ApiHelperFacade helpers,
             [FromServices] NpgsqlDataSource ds,
             HttpContext context) =>
         {
-            var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
-            helpers.EndpointUtilities.ValidateModel(req);
+            var user = helpers.Security.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+            helpers.Security.ValidateModel(req);
             var transaction = ds.OpenConnection().BeginTransaction();
             var todo = transaction.Connection!.QueryFirstOrDefault<TodoWithTags>(@"
 insert into todo_manager.todo (title, description, duedate, userid, priority)
@@ -49,7 +49,7 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
                         new { TodoId = todo.Id, TagId = e.Id }) == 0)
                     throw new InvalidOperationException("Could not associate tag with todo");
             });
-            todo.Tags = transaction.Connection!.Query<IndependentHelpers.Domain.Tag>(
+            todo.Tags = transaction.Connection!.Query<Core.Domain.Tag>(
                 "select * from todo_manager.tag join todo_manager.todo_tag tt on tag.id = tt.tagid where tt.todoid = @id;",
                 new { id = todo.Id }).ToList() ?? throw new InvalidOperationException("Could not retrieve tags");
 

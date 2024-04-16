@@ -1,8 +1,8 @@
 using System.Text.Json;
 
-namespace IndependentHelpers.Statics.BusinessAgnostics;
+namespace Core.Statics.BusinessAgnostics;
 
-public static class TextExtensions
+public static class IndependentTextExtensions
 {
     public static T Deserialize<T>(this string json)
     {

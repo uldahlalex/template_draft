@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Carter;
 using Dapper;
-using IndependentHelpers.Domain;
+using Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -14,14 +14,14 @@ public class GetTodosWithTags : ICarterModule
         app.MapGet("/api/todos", async (
             HttpContext context,
             [FromServices] NpgsqlDataSource ds,
-            [FromServices] EndpointHelperFacade helpers,
+            [FromServices] ApiHelperFacade helpers,
             [FromQuery] string serializedTagArray,
             [FromQuery] string orderBy,
             [FromQuery] string direction,
             [FromQuery] bool showCompleted,
             [FromQuery] int limit = 50) =>
         {
-            var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+            var user = helpers.Security.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
 
             var tags = JsonSerializer.Deserialize<int[]>(serializedTagArray);
             IEnumerable<dynamic> todos;
@@ -68,7 +68,7 @@ LIMIT {limit};
                     CreatedAt = row.createdat,
                     Priority = row.priority,
                     UserId = row.userid,
-                    Tags = JsonSerializer.Deserialize<List<IndependentHelpers.Domain.Tag>>(row.tags)
+                    Tags = JsonSerializer.Deserialize<List<Core.Domain.Tag>>(row.tags)
                 };
 
                 return todo;

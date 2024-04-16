@@ -1,4 +1,4 @@
-namespace IndependentHelpers;
+namespace Core;
 
 /// <summary>
 ///     I prefer strongly typed values, so I don't hardcode strings, I look up keys by variable. If the values are

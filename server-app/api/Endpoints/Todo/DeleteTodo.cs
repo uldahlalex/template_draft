@@ -1,6 +1,6 @@
 using Carter;
 using Dapper;
-using IndependentHelpers.Domain;
+using Core.Domain;
 using Npgsql;
 
 namespace api.Endpoints.Todo;
@@ -10,10 +10,10 @@ public class Delete : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapDelete("api/todo/{id}", (int id, HttpContext context,
-            EndpointHelperFacade helpers, 
+            ApiHelperFacade helpers, 
             NpgsqlDataSource ds) =>
         {
-            var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+            var user = helpers.Security.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
 
             using (var conn = ds.OpenConnection())
             {

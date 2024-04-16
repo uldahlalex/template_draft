@@ -1,4 +1,4 @@
-namespace IndependentHelpers.Domain;
+namespace Core.Domain;
 
 public class TodoWithTags
 {

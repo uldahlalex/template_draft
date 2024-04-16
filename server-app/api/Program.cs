@@ -1,4 +1,6 @@
 using ApiHelpers.ApiHelpers;
+using BootstrappingHelpers.BootstrappingHelpers.DbHelper;
+using BootstrappingHelpers.BootstrappingHelpers.Documentation;
 using Carter;
 
 namespace api;
@@ -23,25 +25,24 @@ public class Program
             .AddCarter()
             .AddCors()
             .AddEndpointsApiExplorer()
-            
+
             //Exclusively from Independent Helpers
             .AddSingleton<KeyNames>()
-            .AddSingleton<HardcodedValues>()
-            .AddSingleton<CredentialService>()
+            .AddSingleton<Values>()
 
             //Exclusively from API Helpers
-            .AddSingleton<TokenService>()
-            .AddSingleton<EndpointHelpers>()
-            .AddSingleton<EndpointHelperFacade>();
+            .AddSingleton<Security>()
+            
+            
+            .AddSingleton<ApiHelperFacade>() //The class to contain the other API helpers
 
             //Exclusively from Bootstrapping Helpers: Documentation Helpers
-            .AddSingleton<SwaggerDefinition>()
-            .AddHostedService<SwaggerJsonGeneratorService>()
+            .AddSwaggerDefinition()
+            .AddHostedService<SwaggerJsonGeneratorService>() //todo Check hosted service
             
-            //Dependent on at least one service in previous layer
             //Exclusively from DB Helpers
             .AddSingleton<BuildDbContainer>()
-            .AddSingleton<DbScripts>()
+            .AddSingleton<DbScripts>(); //Requires NpgsqlDataSource
 
 
         // if (Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT)
@@ -50,7 +51,7 @@ public class Program
 
         var app = builder.Build();
 
-
+        
         return app;
     }
 }

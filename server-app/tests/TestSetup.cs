@@ -1,7 +1,7 @@
 using api;
 using ApiHelpers.ApiHelpers;
-using IndependentHelpers;
-using IndependentHelpers.Domain;
+using Core;
+using Core.Domain;
 using Microsoft.AspNetCore.Builder;
 
 namespace tests;
@@ -12,7 +12,7 @@ public class TestSetup
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJVc2VybmFtZSI6ImJsYWFhaCIsIklkIjoxfQ.1aQtDZb0Vi8tSIt5YGtgEXCtWSh_9asIMLjzFkbwrN2QOGzA4d4kMFo9MtYfTepQ2k5e5PqTGmZt46HmMxKa3A";
 
     public WebApplication App;
-    public CredentialService CredentialService = new();
+    // public CredentialService CredentialService = new();
     public HttpClient HttpClient = new();
 
 
@@ -47,7 +47,7 @@ public class TestSetup
         Password = "blaaah"
     };
 
-    public TokenService TokenService = new();
+    // public TokenService TokenService = new();
 
     public TestSetup()
     {

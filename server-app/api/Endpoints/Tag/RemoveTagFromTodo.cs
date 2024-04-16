@@ -1,6 +1,6 @@
 using Carter;
 using Dapper;
-using IndependentHelpers.Domain;
+using Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -13,11 +13,11 @@ public class RemoveTagToTodo : ICarterModule
         app.MapDelete("/api/tags/{tagId}/removeFromTodo/{todoId}",
             (HttpContext context,
                 [FromServices] NpgsqlDataSource dataSource,
-                [FromServices] EndpointHelperFacade helpers,
+                [FromServices] ApiHelperFacade helpers,
                 [FromRoute] int tagId,
                 [FromRoute] int todoId) =>
             {
-                var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+                var user = helpers.Security.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
 
                 var sql = @"
 DELETE FROM todo_manager.todo_tag

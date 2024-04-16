@@ -1,2 +1,2 @@
-global using IndependentHelpers.Domain;
-global using IndependentHelpers;
+global using Core.Domain;
+global using Core;

@@ -1,6 +1,6 @@
 using Carter;
 using Dapper;
-using IndependentHelpers.Domain;
+using Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -21,10 +21,10 @@ public class UpdateTodo : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPut("/api/todos/{id}", (UpdateTodoRequestDto req,
-            [FromServices] EndpointHelperFacade helpers,
+            [FromServices] ApiHelperFacade helpers,
             NpgsqlDataSource ds, HttpContext context) =>
         {
-            var user = helpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+            var user = helpers.Security.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
 
 
             var conn = ds.OpenConnection();

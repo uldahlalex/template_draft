@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\IndependentHelpers\IndependentHelpers.csproj" />
+      <ProjectReference Include="..\Core\Core.csproj" />
       <ProjectReference Include="..\ApiHelpers\ApiHelpers.csproj" />
       <ProjectReference Include="..\BootstrappingHelpers\BootstrappingHelpers.csproj" />
     </ItemGroup>

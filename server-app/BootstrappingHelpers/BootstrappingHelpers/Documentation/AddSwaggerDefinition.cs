@@ -4,9 +4,9 @@ using Microsoft.OpenApi.Models;
 
 namespace BootstrappingHelpers.BootstrappingHelpers.Documentation;
 
-public class SwaggerDefinition
+public static class SwaggerDefinition
 {
-    public void AddSwaggerDefinition(IServiceCollection services)
+    public static IServiceCollection AddSwaggerDefinition(this IServiceCollection services)
     {
         services.AddSwaggerGen(c =>
         {
@@ -38,5 +38,6 @@ public class SwaggerDefinition
             });
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
         });
+        return services;
     }
 }
