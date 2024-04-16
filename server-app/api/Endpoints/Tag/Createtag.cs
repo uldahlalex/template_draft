@@ -1,8 +1,8 @@
-using Agnostics;
-using api.Independent.KeysAndValues;
+using api.DependentHelpers.ApiHelpers;
+using api.Globals.Domain;
+using api.Independent;
 using Carter;
 using Dapper;
-using EndpointHelpers.EndpointHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -20,13 +20,15 @@ public class Createtag : ICarterModule
         app.MapPost("api/tags", (
             [FromBody] CreateTagRequestDto dto,
             HttpContext context,
+            [FromServices] IndependentHelpers indep,
+            [FromServices] ApiHelperFacade epHelpers,
             [FromServices] NpgsqlDataSource ds) =>
         {
-            var user = context.VerifyJwtReturnPayloadAsT<User>(
-                Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT));
+            var user = epHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
+
             using (var conn = ds.OpenConnection())
             {
-                var insertedTag = conn.QueryFirst<Agnostics.Tag>(
+                var insertedTag = conn.QueryFirst<Globals.Domain.Tag>(
                     "insert into todo_manager.tag (name, userid) values (@name, @userid) returning *;",
                     new
                     {

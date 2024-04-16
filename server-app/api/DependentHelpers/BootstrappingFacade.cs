@@ -1,5 +1,5 @@
 using api.DependentHelpers.BootstrappingHelpers.DbHelper;
-using api.DependentHelpers.BootstrappingHelpers.Documentatio;
+using api.DependentHelpers.BootstrappingHelpers.Documentation;
 
 namespace api.DependentHelpers.BootstrappingHelpers;
 
@@ -9,30 +9,8 @@ public class BootstrappingFacade(BuildDbContainer buildDbContainer, DbScripts db
     public DbScripts DbScripts { get; } = dbScripts;
     public SwaggerDefinition SwaggerDefinition { get; } = swaggerDefinition;
     public SwaggerJsonGeneratorService SwaggerJsonGeneratorService { get; } = swaggerJsonGeneratorService;
-}
-
-public static class BootstrappingFacadeExtensions
-{
-    public static IServiceCollection AddBootstrappingFacade(this IServiceCollection services)
-    {
-        //todo lifetime adjustment
-        //todo pg conn
-        services.AddNpgsqlDataSource("HardcodedValues.LOCAL_POSTGRES", cfg => cfg.EnableParameterLogging());
-
-        services.AddSingleton<BuildDbContainer>();
-        services.AddSingleton<DbScripts>();
-        services.AddSingleton<SwaggerDefinition>();
-        services.AddSingleton<BootstrappingFacade>();
-        services.AddHostedService<SwaggerJsonGeneratorService>(); //todo hosted service diff
-        
-
-        return services;
-    }
-}
-
-public class UseBootstrappingFacade(BootstrappingFacade bootstrappingFacade, UtilitiesFacade utilitiesFacade)
-{
-    public void Init()
+    
+    public void ApplicationPhaseInit()
     {
         
         //Evaluating environment
@@ -60,4 +38,28 @@ public class UseBootstrappingFacade(BootstrappingFacade bootstrappingFacade, Uti
         //     app.Services.GetService<DbScripts>()!.SeedDB();
         // }
     }
+    
 }
+
+public static class BootstrappingFacadeExtensions
+{
+    public static IServiceCollection AddBootstrappingFacade(this IServiceCollection services)
+    {
+        //todo lifetime adjustment
+        //todo pg conn
+        services.AddNpgsqlDataSource("HardcodedValues.LOCAL_POSTGRES", cfg => cfg.EnableParameterLogging());
+        
+        
+        services.AddSingleton<BuildDbContainer>();
+        services.AddSingleton<DbScripts>();
+        services.AddSingleton<SwaggerDefinition>();
+        services.AddSingleton<BootstrappingFacade>();
+        services.AddHostedService<SwaggerJsonGeneratorService>(); //todo hosted service diff
+        
+        
+        
+
+        return services;
+    }
+}
+

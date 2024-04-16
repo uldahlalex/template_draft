@@ -1,8 +1,9 @@
-using Agnostics;
-using api.Independent.KeysAndValues;
+using api.DependentHelpers.ApiHelpers;
+using api.Globals.Domain;
+using api.Independent;
 using Carter;
 using Dapper;
-using EndpointHelpers.EndpointHelpers;
+using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
 namespace api.Endpoints.Todo;
@@ -21,9 +22,12 @@ public class UpdateTodo : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPut("/api/todos/{id}", (UpdateTodoRequestDto req, NpgsqlDataSource ds, HttpContext context) =>
+        app.MapPut("/api/todos/{id}", (UpdateTodoRequestDto req,
+            [FromServices] ApiHelperFacade apiHelpers,
+            [FromServices] IndependentHelpers indep,
+            NpgsqlDataSource ds, HttpContext context) =>
         {
-            context.VerifyJwtReturnPayloadAsT<User>(Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
+            var user = apiHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
 
             var conn = ds.OpenConnection();
             var userId = 1;

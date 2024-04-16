@@ -1,14 +1,14 @@
+using System.ComponentModel.DataAnnotations;
 using System.Security.Authentication;
 using System.Text.Json;
 using JWT.Algorithms;
 using JWT.Builder;
-using Microsoft.AspNetCore.Http;
 
-namespace EndpointHelpers.EndpointHelpers;
+namespace api.DependentHelpers.ApiHelpers;
 
-public static class HttpContextExtensions
+public class EndpointHelpers
 {
-    public static T VerifyJwtReturnPayloadAsT<T>(this HttpContext context, string secret)
+    public T VerifyJwtReturnPayloadAsT<T>(HttpContext context, string secret)
     {
         try
         {
@@ -33,5 +33,11 @@ public static class HttpContextExtensions
             Console.WriteLine(e.StackTrace);
             throw new AuthenticationException("Authentication error regarding token");
         }
+    }
+    public void ValidateModel<T>(T model)
+    {
+        //todo fluent or annotations?
+        var context = new ValidationContext(model, null, null);
+        Validator.ValidateObject(model, context, true);
     }
 }

@@ -1,8 +1,8 @@
-using Agnostics;
-using api.Independent.KeysAndValues;
+using api.DependentHelpers.ApiHelpers;
+using api.Globals.Domain;
+using api.Independent;
 using Carter;
 using Dapper;
-using EndpointHelpers.Security;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -16,7 +16,8 @@ public class SignIn : ICarterModule
             [FromBody] AuthenticationRequestDto req,
             [FromServices] NpgsqlDataSource ds,
             [FromServices] CredentialService credService,
-            [FromServices] UtilitiesFacade utilitiesFacade
+            [FromServices] IndependentHelpers indep,
+            [FromServices] ApiHelperFacade utilitiesFacade
             ) =>
         {
             using var conn = ds.OpenConnection();
@@ -28,7 +29,7 @@ public class SignIn : ICarterModule
                 }) ?? throw new InvalidOperationException("Invalid sign-in");
             conn.Close();
 
-            if (CredentialService.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
+            if (utilitiesFacade.CredentialService.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
                 throw new InvalidOperationException("Invalid sign-in");
 
             return new AuthenticationResponseDto
@@ -36,7 +37,7 @@ public class SignIn : ICarterModule
                 token = utilitiesFacade.TokenService.IssueJwt([
                     new KeyValuePair<string, object>(nameof(userToCheck.Username), userToCheck.Username),
                     new KeyValuePair<string, object>(nameof(userToCheck.Id), userToCheck.Id)
-                ], Environment.GetEnvironmentVariable(KeyNames.JWT_KEY))
+                ], Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!),
             };
         });
     }

@@ -1,4 +1,4 @@
-namespace Agnostics;
+namespace api.Globals.Domain;
 
 public class TodoWithTags
 {

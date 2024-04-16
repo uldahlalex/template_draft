@@ -1,4 +1,6 @@
+using api.DependentHelpers.ApiHelpers;
 using api.DependentHelpers.BootstrappingHelpers;
+using api.Independent;
 using Carter;
 
 namespace api;
@@ -17,17 +19,20 @@ public class Program
         var builder = WebApplication.CreateBuilder();
         builder.Services
             .AddProblemDetails()
-            .AddUtilitiesFacade()
-            .AddBootstrappingFacade()
             .AddCarter()
             .AddCors()
-            .AddEndpointsApiExplorer();
+            .AddEndpointsApiExplorer()
+            .IndependentHelpers()
+            .AddBootstrappingFacade()
+            .AddDependentHelpersFacade();
+     
        
         // if (Environment.GetEnvironmentVariable(KeyNames.ASPNETCORE_ENVIRONMENT)
         //     .Equals(HardcodedValues.Environments.Testing))
         //     builder.WebHost.UseUrls("http://localhost:9999");
 
         var app = builder.Build();
+        app.Services.GetService<BootstrappingFacade>()!.ApplicationPhaseInit();
         return app;
     }
 }

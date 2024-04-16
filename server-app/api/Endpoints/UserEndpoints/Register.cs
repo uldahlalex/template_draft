@@ -1,8 +1,8 @@
-using Agnostics;
-using api.Independent.KeysAndValues;
+using api.DependentHelpers.ApiHelpers;
+using api.Globals.Domain;
+using api.Independent;
 using Carter;
 using Dapper;
-using EndpointHelpers.Security;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -20,10 +20,11 @@ public class Register : ICarterModule
     {
         app.MapPost("/api/register",
             ([FromBody] AuthenticationRequestDto req, [FromServices] NpgsqlDataSource ds,
-                [FromServices] UtilitiesFacade utilitiesFacade) =>
+                [FromServices] IndependentHelpers indep,
+                [FromServices]ApiHelperFacade apiHelper) =>
             {
-                var salt = CredentialService.GenerateSalt();
-                var hash = CredentialService.Hash(req.Password, salt);
+                var salt = apiHelper.CredentialService.GenerateSalt();
+                var hash = apiHelper.CredentialService.Hash(req.Password, salt);
                 using var conn = ds.OpenConnection();
                 var user = conn.QueryFirstOrDefault<User>(
                     "insert into todo_manager.user (username, passwordhash, salt) values (@Username, @PasswordHash, @Salt) RETURNING *;",
@@ -37,10 +38,10 @@ public class Register : ICarterModule
 
                 return new AuthenticationResponseDto
                 {
-                    token = utilitiesFacade.TokenService.IssueJwt([
+                    token = apiHelper.TokenService.IssueJwt([
                         new KeyValuePair<string, object>(nameof(user.Username), user.Username),
                         new KeyValuePair<string, object>(nameof(user.Id), user.Id)
-                    ], Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!)
+                    ], Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!)
                 };
             });
     }

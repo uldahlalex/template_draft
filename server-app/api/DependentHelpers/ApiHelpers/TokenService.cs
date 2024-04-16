@@ -1,7 +1,7 @@
 using JWT.Algorithms;
 using JWT.Builder;
 
-namespace EndpointHelpers.Security;
+namespace api.DependentHelpers.ApiHelpers;
 
 
 public class TokenService 

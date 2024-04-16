@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using Agnostics;
-using api.Independent.KeysAndValues;
+using api.DependentHelpers.ApiHelpers;
+using api.Globals.Domain;
+using api.Independent;
 using Carter;
 using Dapper;
-using EndpointHelpers.EndpointHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -16,11 +16,13 @@ public class Create : ICarterModule
     {
         app.MapPost("/api/todos", (
             [FromBody] CreateTodoRequestDto req,
+            ApiHelperFacade apiHelpers,
+            IndependentHelpers indep,
             [FromServices] NpgsqlDataSource ds,
             HttpContext context) =>
         {
-            var user = context.VerifyJwtReturnPayloadAsT<User>(Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
-            req.ValidateModel();
+            var user = apiHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
+            apiHelpers.EndpointUtilities.ValidateModel(req);
             var transaction = ds.OpenConnection().BeginTransaction();
             var todo = transaction.Connection!.QueryFirstOrDefault<TodoWithTags>(@"
 insert into todo_manager.todo (title, description, duedate, userid, priority)
@@ -41,7 +43,7 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
                         new { TodoId = todo.Id, TagId = e.Id }) == 0)
                     throw new InvalidOperationException("Could not associate tag with todo");
             });
-            todo.Tags = transaction.Connection!.Query<Agnostics.Tag>(
+            todo.Tags = transaction.Connection!.Query<Globals.Domain.Tag>(
                 "select * from todo_manager.tag join todo_manager.todo_tag tt on tag.id = tt.tagid where tt.todoid = @id;",
                 new { id = todo.Id }).ToList() ?? throw new InvalidOperationException("Could not retrieve tags");
 
@@ -59,5 +61,5 @@ public class CreateTodoRequestDto
     public string Description { get; set; } = default!;
     public DateTime DueDate { get; set; }
     public int Priority { get; set; }
-    public List<Agnostics.Tag> Tags { get; set; } = default!;
+    public List<Globals.Domain.Tag> Tags { get; set; } = default!;
 }

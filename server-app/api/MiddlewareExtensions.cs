@@ -3,6 +3,8 @@ using System.Security.Authentication;
 using Carter;
 using FluentValidation;
 
+namespace api;
+
 public static class MiddlewareExtensions
 {
     public static WebApplication AddMiddleware(this WebApplication app)

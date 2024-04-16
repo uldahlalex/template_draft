@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Carter" Version="8.0.0"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
         <PackageReference Include="JWT" Version="10.1.1"/>
         <PackageReference Include="Docker.DotNet" Version="3.125.15"/>
         <PackageReference Include="Npgsql.DependencyInjection" Version="8.0.2"/>
@@ -16,17 +17,6 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.2"/>
         <PackageReference Include="Dapper" Version="2.1.28"/>
 
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\EndpointHelpers\EndpointHelpers.csproj" />
-        <ProjectReference Include="..\GlobalModels\GlobalModels.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="DependentHelpers\EndpointHelpers\" />
-      <Folder Include="Independent\" />
-      <Folder Include="Independent\GlobalModels\" />
     </ItemGroup>
     
 

@@ -1,11 +1,11 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace EndpointHelpers.Security;
+namespace api.DependentHelpers.ApiHelpers;
 
 public class CredentialService
 {
-    public static string? GenerateSalt()
+    public string? GenerateSalt()
     {
         var bytes = new byte[128 / 8];
         using var keyGenerator = RandomNumberGenerator.Create();
@@ -13,7 +13,7 @@ public class CredentialService
         return Convert.ToBase64String(bytes);
     }
 
-    public static string Hash(string? password, string? salt)
+    public string Hash(string? password, string? salt)
     {
         try
         {

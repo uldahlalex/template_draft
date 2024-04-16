@@ -1,8 +1,9 @@
-using Agnostics;
-using api.Independent.KeysAndValues;
+
+using api.DependentHelpers.ApiHelpers;
+using api.Globals.Domain;
+using api.Independent;
 using Carter;
 using Dapper;
-using EndpointHelpers.EndpointHelpers;
 using Npgsql;
 
 namespace api.Endpoints.Todo;
@@ -11,9 +12,12 @@ public class Delete : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("api/todo/{id}", (int id, HttpContext context, NpgsqlDataSource ds) =>
+        app.MapDelete("api/todo/{id}", (int id, HttpContext context,
+            ApiHelperFacade apiHelpers, 
+            IndependentHelpers indep,
+            NpgsqlDataSource ds) =>
         {
-            context.VerifyJwtReturnPayloadAsT<User>(Environment.GetEnvironmentVariable(KeyNames.JWT_KEY)!);
+            var user = apiHelpers.EndpointUtilities.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(indep.KeyNames.JWT_KEY)!);
 
             using (var conn = ds.OpenConnection())
             {
