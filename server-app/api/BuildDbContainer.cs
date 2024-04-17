@@ -1,14 +1,15 @@
 using System.Net.NetworkInformation;
+using api.Boilerplate.ReusableHelpers.GlobalValues;
 using Dapper;
 using Docker.DotNet;
 using Docker.DotNet.Models;
 using Npgsql;
 
-namespace BootstrappingHelpers.BootstrappingHelpers.DbHelper;
+namespace api.Boilerplate.DbHelpers;
 
-public class BuildDbContainer
+public static class BuildDbContainer
 {
-    public async Task StartDbInContainer(string postgresConnectionString)
+    public static async Task StartDbInContainer()
     {
         try
         {
@@ -37,7 +38,7 @@ public class BuildDbContainer
             else
                 await CreateContainerFromImage(client, imageName, containerName);
 
-            var ds = new NpgsqlDataSourceBuilder(postgresConnectionString).Build();
+            var ds = new NpgsqlDataSourceBuilder(Env.PG_CONN).Build();
             TestConnection(ds);
         }
         catch (Exception ex)
@@ -60,8 +61,8 @@ public class BuildDbContainer
         catch (Exception)
         {
             attempts++;
-            Console.WriteLine("Waiting for connection to become available");
-            Task.Delay(500).Wait();
+            Console.WriteLine("Waiting for connection to available");
+            Task.Delay(100).Wait();
             TestConnection(ds, attempts);
         }
     }
@@ -124,11 +125,10 @@ public class BuildDbContainer
         if (OperatingSystem.IsLinux())
         {
             //if running on github actions:
-            if (Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true") return "unix:///var/run/docker.sock";
-            return
-                "unix:///home/alex/.docker/desktop/docker.sock"; //"unix:///var/run/docker.sock"; todo fix the linux path for the average user and not just me lol
-        }
+            if(Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true") return "unix:///var/run/docker.sock";
+                         return "unix:///home/alex/.docker/desktop/docker.sock"; //"unix:///var/run/docker.sock"; todo fix the linux path for the average user and not just me lol
 
+        }
         if (OperatingSystem.IsMacOS()) return "unix:///var/run/docker.sock";
         throw new PlatformNotSupportedException("Unsupported operating system");
     }

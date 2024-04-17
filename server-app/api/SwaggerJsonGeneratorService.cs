@@ -1,15 +1,16 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace BootstrappingHelpers.StaticInvokable;
+namespace api.Boilerplate;
 
-public static class SwaggerJsonGenerator
+public class SwaggerJsonGeneratorService(IServiceProvider serviceProvider) : BackgroundService
 {
-    public static void GenerateJsonFromSwaggerDefinition(IServiceProvider serviceProvider)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        // Wait a short period to ensure the application is fully started
+        await Task.Delay(1000, stoppingToken);
+
         using (var scope = serviceProvider.CreateScope())
         {
             var swaggerProvider = scope.ServiceProvider.GetRequiredService<ISwaggerProvider>();
