@@ -1,6 +1,6 @@
 using Carter;
 using Dapper;
-using Core.Domain;
+using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -17,7 +17,7 @@ public class RemoveTagToTodo : ICarterModule
                 [FromRoute] int tagId,
                 [FromRoute] int todoId) =>
             {
-                var user = helpers.Security.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+                var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
 
                 var sql = @"
 DELETE FROM todo_manager.todo_tag

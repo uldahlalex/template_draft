@@ -1,7 +1,6 @@
 using Carter;
 using Dapper;
-using Core;
-using Core.Domain;
+using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -31,15 +30,15 @@ public class SignIn : ICarterModule
                 }) ?? throw new InvalidOperationException("Invalid sign-in");
             conn.Close();
 
-            if (helpers.Security.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
+            if (helpers.SecurityService.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
                 throw new InvalidOperationException("Invalid sign-in");
 
             return new AuthenticationResponseDto
             {
-                token = helpers.Security.IssueJwt([
+                token = helpers.SecurityService.IssueJwt([
                     new KeyValuePair<string, object>(nameof(userToCheck.Username), userToCheck.Username),
                     new KeyValuePair<string, object>(nameof(userToCheck.Id), userToCheck.Id)
-                ], Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!),
+                ], Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!),
             };
         });
     }

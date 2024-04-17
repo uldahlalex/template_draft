@@ -1,6 +1,6 @@
 using Carter;
 using Dapper;
-using Core.Domain;
+using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -15,7 +15,7 @@ public class DeleteTag : ICarterModule
             [FromServices] ApiHelperFacade helpers,
             HttpContext context, NpgsqlDataSource ds) =>
         {
-            var user = helpers.Security.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
             using var conn = ds.OpenConnection();
             var impactedRows = conn.Execute("delete from todo_manager.todo where id = @id", new { id });
             if (impactedRows == 0) throw new InvalidOperationException("Could not delete");

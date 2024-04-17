@@ -1,7 +1,6 @@
-using ApiHelpers.ApiHelpers;
 using Carter;
 using Dapper;
-using Core.Domain;
+using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -15,12 +14,12 @@ public class GetTags : ICarterModule
 [FromServicesAttribute]            ApiHelperFacade helpers 
             ) =>
             {
-                var user = helpers.Security.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+                var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
 
-                List<Core.Domain.Tag> tags;
+                List<IndependentHelpers.DomainModels.Tag> tags;
                 using (var conn = ds.OpenConnection())
                 {
-                    tags = conn.Query<Core.Domain.Tag>(@"
+                    tags = conn.Query<IndependentHelpers.DomainModels.Tag>(@"
 select * from todo_manager.tag where userid = 1;
 ")
                         .ToList();

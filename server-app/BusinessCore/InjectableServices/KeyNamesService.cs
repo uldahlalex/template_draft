@@ -1,10 +1,10 @@
-namespace Core;
+namespace IndependentHelpers.InjectableServices;
 
 /// <summary>
 ///     I prefer strongly typed values, so I don't hardcode strings, I look up keys by variable. If the values are
 ///     "typical" they can be found under HardcodedValues.cs
 /// </summary>
-public  class KeyNames
+public  class KeyNamesService
 {
     public  string JWT_KEY = nameof(JWT_KEY);
     public  string ASPNETCORE_ENVIRONMENT = nameof(ASPNETCORE_ENVIRONMENT);

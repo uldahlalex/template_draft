@@ -2,10 +2,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
-namespace BootstrappingHelpers.BootstrappingHelpers.Documentation;
+namespace BootstrappingHelpers.BuilderPhaseHelpers;
 
 public static class SwaggerDefinition
 {
+    /// <summary>
+    /// Use in builder pipeline
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceCollection AddSwaggerDefinition(this IServiceCollection services)
     {
         services.AddSwaggerGen(c =>

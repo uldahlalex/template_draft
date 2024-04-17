@@ -7,9 +7,9 @@ using JWT.Algorithms;
 using JWT.Builder;
 using Microsoft.AspNetCore.Http;
 
-namespace ApiHelpers.ApiHelpers;
+namespace ApiHelperServics;
 
-public class Security
+public class SecurityService
 {
     public T VerifyJwtReturnPayloadAsT<T>(HttpContext context, string secret)
     {

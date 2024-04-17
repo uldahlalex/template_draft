@@ -1,26 +1,16 @@
-using ApiHelpers.ApiHelpers;
+using ApiHelperServics;
+using IndependentHelpers.InjectableServices;
 
 namespace api;
 
 public class ApiHelperFacade(
-    Values values,
-    KeyNames keyNames,
-    Security security)
+    ValuesService valuesService,
+    KeyNamesService keyNamesService,
+    SecurityService securityService)
 {
-    public Security Security { get; } = security;
-    public Values Values { get; } = values;
-    public KeyNames KeyNames { get; } = keyNames;
+    public SecurityService SecurityService { get; } = securityService;
+    public ValuesService ValuesService { get; } = valuesService;
+    public KeyNamesService KeyNamesService { get; } = keyNamesService;
     
 }
 
-// public static class EndpointDependentHelpersFacadeExtensions
-// {
-//     public static IServiceCollection AddDependentHelpersFacade(this IServiceCollection services)
-//     {
-//         services.AddSingleton<TokenService>();
-//         services.AddSingleton< CredentialService>(); 
-//         services.AddSingleton<ApiHelperFacade>();
-//         services.AddSingleton<EndpointHelpers>();
-//         return services;
-//     }
-// }

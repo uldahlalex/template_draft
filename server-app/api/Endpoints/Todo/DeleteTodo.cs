@@ -1,6 +1,6 @@
 using Carter;
 using Dapper;
-using Core.Domain;
+using IndependentHelpers.DomainModels;
 using Npgsql;
 
 namespace api.Endpoints.Todo;
@@ -13,7 +13,7 @@ public class Delete : ICarterModule
             ApiHelperFacade helpers, 
             NpgsqlDataSource ds) =>
         {
-            var user = helpers.Security.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
 
             using (var conn = ds.OpenConnection())
             {

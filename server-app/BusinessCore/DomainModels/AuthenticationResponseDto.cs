@@ -1,4 +1,4 @@
-namespace Core.Domain;
+namespace IndependentHelpers.DomainModels;
 
 public class AuthenticationResponseDto
 {

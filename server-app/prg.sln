@@ -5,11 +5,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{5E43013B-E99E-4A02-BA5E-B1E46BC7E2DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{71C7E2B8-4465-4B7C-9509-D89DEC73883B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessCore", "BusinessCore\BusinessCore.csproj", "{71C7E2B8-4465-4B7C-9509-D89DEC73883B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootstrappingHelpers", "BootstrappingHelpers\BootstrappingHelpers.csproj", "{3EDBFBD7-D092-4165-AF22-A2BBB1D0B60B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiHelpers", "ApiHelpers\ApiHelpers.csproj", "{DEBA50BE-64E8-4E4F-9FF8-47551443D797}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiHelperServics", "ApiHelperServics\ApiHelperServics.csproj", "{DEBA50BE-64E8-4E4F-9FF8-47551443D797}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

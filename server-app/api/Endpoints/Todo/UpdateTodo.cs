@@ -1,6 +1,6 @@
 using Carter;
 using Dapper;
-using Core.Domain;
+using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -24,7 +24,7 @@ public class UpdateTodo : ICarterModule
             [FromServices] ApiHelperFacade helpers,
             NpgsqlDataSource ds, HttpContext context) =>
         {
-            var user = helpers.Security.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNames.JWT_KEY)!);
+            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
 
 
             var conn = ds.OpenConnection();

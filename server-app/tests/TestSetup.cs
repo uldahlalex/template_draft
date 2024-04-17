@@ -1,7 +1,5 @@
 using api;
-using ApiHelpers.ApiHelpers;
-using Core;
-using Core.Domain;
+using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Builder;
 
 namespace tests;
