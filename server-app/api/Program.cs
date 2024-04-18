@@ -2,6 +2,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using api.Boilerplate;
 using api.Boilerplate.DbHelpers;
+using ApiHelperServics;
 using Carter;
 using Dapper;
 using FluentValidation;
@@ -17,6 +18,10 @@ public class Program
     public static async Task Main()
     {
         var app = await Startup();
+        var keys = app.Services.GetService<KeyNamesService>();
+        var values = app.Services.GetService<ValuesService>();
+        JsonSerializer.Serialize("KEYS:"+keys);
+        JsonSerializer.Serialize("VALUES: "+values);
         if (!Environment.GetEnvironmentVariable(app.Services.GetService<KeyNamesService>()!.ASPNETCORE_ENVIRONMENT)!
                 .Equals(app.Services.GetService<ValuesService>()!.Production))
         {
@@ -45,6 +50,10 @@ public class Program
 
         var builder = WebApplication.CreateBuilder();
         builder.Services
+            .AddSingleton(keyNames)
+            .AddSingleton(values)
+            .AddSingleton<SecurityService>()
+            .AddSingleton<ApiHelperFacade>()
             .AddProblemDetails()
             .AddNpgsqlDataSource(Environment.GetEnvironmentVariable(keyNames.PG_CONN)!, cfg => cfg.EnableParameterLogging())
             .AddCarter()
