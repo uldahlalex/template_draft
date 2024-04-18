@@ -8,9 +8,7 @@ public class SwaggerJsonGeneratorService(IServiceProvider serviceProvider) : Bac
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        // Wait a short period to ensure the application is fully started
         await Task.Delay(1000, stoppingToken);
-
         using (var scope = serviceProvider.CreateScope())
         {
             var swaggerProvider = scope.ServiceProvider.GetRequiredService<ISwaggerProvider>();
@@ -19,7 +17,6 @@ public class SwaggerJsonGeneratorService(IServiceProvider serviceProvider) : Bac
             var outputPath =
                 Path.Combine(serviceProvider.GetRequiredService<IWebHostEnvironment>().ContentRootPath + "/../../",
                     "swagger.json");
-
             File.WriteAllText(outputPath, swaggerFile);
         }
     }

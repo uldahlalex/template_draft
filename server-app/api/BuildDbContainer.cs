@@ -1,5 +1,4 @@
 using System.Net.NetworkInformation;
-using api.Boilerplate.ReusableHelpers.GlobalValues;
 using Dapper;
 using Docker.DotNet;
 using Docker.DotNet.Models;
@@ -9,7 +8,7 @@ namespace api.Boilerplate.DbHelpers;
 
 public static class BuildDbContainer
 {
-    public static async Task StartDbInContainer()
+    public static async Task StartDbInContainer(string postgresConnectionString)
     {
         try
         {
@@ -38,7 +37,7 @@ public static class BuildDbContainer
             else
                 await CreateContainerFromImage(client, imageName, containerName);
 
-            var ds = new NpgsqlDataSourceBuilder(Env.PG_CONN).Build();
+            var ds = new NpgsqlDataSourceBuilder(postgresConnectionString).Build();
             TestConnection(ds);
         }
         catch (Exception ex)
