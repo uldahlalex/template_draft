@@ -2,7 +2,6 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using IndependentHelpers.DomainModels;
-using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 namespace tests;

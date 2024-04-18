@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {decodeJwt, http} from "../../../reusables/logic/logic.ts";
+import {http} from "../../../reusables/logic/logic.ts";
 import {useAtom} from "jotai";
 import {jwtAtom, userAtom} from "../../../reusables/state/states.ts";
 
@@ -25,7 +25,7 @@ export default function Login() {
             .registerCreate(authForm)
             .then((r) => {
                 authenticateWithToken(r.data.token!);
-        });
+            });
     }
 
     const authenticateWithToken = (token) => {
@@ -45,7 +45,8 @@ export default function Login() {
 
                     <label className="input input-bordered flex items-center gap-2">
 
-                        <input type="text" onChange={e => setauthForm({...authForm, username: e.target.value})} name="username" className="grow"
+                        <input type="text" onChange={e => setauthForm({...authForm, username: e.target.value})}
+                               name="username" className="grow"
                                placeholder="email@address.com"/>
                     </label>
 

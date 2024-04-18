@@ -1,7 +1,6 @@
 using ApiHelperServics;
-using IndependentHelpers.InjectableServices;
 
-namespace api;
+namespace api.Setup;
 
 public class ApiHelperFacade(
     ValuesService valuesService,
@@ -11,6 +10,4 @@ public class ApiHelperFacade(
     public SecurityService SecurityService { get; } = securityService;
     public ValuesService ValuesService { get; } = valuesService;
     public KeyNamesService KeyNamesService { get; } = keyNamesService;
-    
 }
-

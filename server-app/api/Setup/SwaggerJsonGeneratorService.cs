@@ -2,7 +2,7 @@ using Microsoft.OpenApi;
 using Microsoft.OpenApi.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace api.Boilerplate;
+namespace api.Setup;
 
 public class SwaggerJsonGeneratorService(IServiceProvider serviceProvider) : BackgroundService
 {

@@ -20,23 +20,23 @@ export default function App() {
             <DevTools/>
 
             {/*UseEffect*/}
-            <GoToLoginWhenJwtAtomIsNull />
-            <SignInEffect />
-            <ThemeChange />
+            <GoToLoginWhenJwtAtomIsNull/>
+            <SignInEffect/>
+            <ThemeChange/>
 
             {/*The two below are not using useEffect and they also modify state*/}
-            <HttpTokenSetterInterceptor />
-            <HttpErrorInterceptor />
+            <HttpTokenSetterInterceptor/>
+            <HttpErrorInterceptor/>
 
             {/*UI components*/}
-            <Toaster />
-            <Header />
+            <Toaster/>
+            <Header/>
 
             {/*Routes*/}
             <Routes>
-                <Route path="/" element={<Navigate to='/feed' replace />} />
-                <Route path="/feed" element={<Feed />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Navigate to='/feed' replace/>}/>
+                <Route path="/feed" element={<Feed/>}/>
+                <Route path="/login" element={<Login/>}/>
             </Routes>
         </Router>
     );

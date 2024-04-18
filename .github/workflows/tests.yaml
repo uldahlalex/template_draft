@@ -1,6 +1,6 @@
 on:
-  workflow_dispatch: 
-    
+  workflow_dispatch:
+
 jobs:
   dotnet_test:
     runs-on: ubuntu-latest

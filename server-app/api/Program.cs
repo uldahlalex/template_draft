@@ -1,13 +1,11 @@
-using System.Net.Http.Headers;
+using System.Net;
+using System.Security.Authentication;
 using System.Text.Json;
-using api.Boilerplate;
-using api.Boilerplate.DbHelpers;
+using api.Setup;
 using ApiHelperServics;
 using Carter;
 using Dapper;
 using FluentValidation;
-using IndependentHelpers.InjectableServices;
-using JWT.Builder;
 using Microsoft.OpenApi.Models;
 using Npgsql;
 
@@ -18,10 +16,9 @@ public class Program
     public static async Task Main()
     {
         var app = await Startup();
-        var keys = app.Services.GetService<KeyNamesService>();
-        var values = app.Services.GetService<ValuesService>();
-        JsonSerializer.Serialize("KEYS:"+keys);
-        JsonSerializer.Serialize("VALUES: "+values);
+
+        #region Build Database and seed for normal runs not in production
+
         if (!Environment.GetEnvironmentVariable(app.Services.GetService<KeyNamesService>()!.ASPNETCORE_ENVIRONMENT)!
                 .Equals(app.Services.GetService<ValuesService>()!.Production))
         {
@@ -34,6 +31,8 @@ public class Program
             conn.Execute(seed);
             conn.Close();
         }
+
+        #endregion
 
         app.Run();
     }
@@ -50,84 +49,118 @@ public class Program
 
         var builder = WebApplication.CreateBuilder();
         builder.Services
+
+            #region Independent business logic
+
             .AddSingleton(keyNames)
             .AddSingleton(values)
             .AddSingleton<SecurityService>()
             .AddSingleton<ApiHelperFacade>()
+
+            #endregion
+
+            #region Nuget pacakes: Totally indepdendent
+
             .AddProblemDetails()
-            .AddNpgsqlDataSource(Environment.GetEnvironmentVariable(keyNames.PG_CONN)!, cfg => cfg.EnableParameterLogging())
             .AddCarter()
             .AddCors()
             .AddEndpointsApiExplorer()
-        .AddSwaggerGen(c =>
-        {
-            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            .AddSwaggerGen(c =>
             {
-                Description =
-                    "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                Name = "Authorization",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
-                Scheme = "Bearer"
-            });
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    new OpenApiSecurityScheme
+                    Description =
+                        "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
                     {
-                        Reference = new OpenApiReference
+                        new OpenApiSecurityScheme
                         {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header
                         },
-                        Scheme = "oauth2",
-                        Name = "Bearer",
-                        In = ParameterLocation.Header
-                    },
-                    new List<string>()
-                }
-            });
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-        }).AddHostedService<SwaggerJsonGeneratorService>();
+                        new List<string>()
+                    }
+                });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            })
 
+            #endregion
+
+            #region Nuget pacakes: Dependent on Independent business logic
+
+            .AddNpgsqlDataSource(Environment.GetEnvironmentVariable(keyNames.PG_CONN)!,
+                cfg => cfg.EnableParameterLogging())
+
+            #endregion
+
+            #region Logic depdenent on previous builder layers
+
+            .AddHostedService<SwaggerJsonGeneratorService>();
         if (Environment.GetEnvironmentVariable(keyNames.ASPNETCORE_ENVIRONMENT)!.Equals(values.Testing))
             builder.WebHost.UseUrls("http://localhost:9999");
-    
+
+        #endregion
+
+
         var app = builder.Build();
 
 
-        app.Use(async (context, next) =>        //Making custom responses upon exceptions
-        {
-            try
+        #region Exception handling and response customization middleware
+
+        app.Use(async (context, next) =>
             {
-                await next();
-            }
-            catch (System.Security.Authentication.AuthenticationException)
-            {
-                context.Response.StatusCode = (int)System.Net.HttpStatusCode.Unauthorized;
-                throw;
-            }
-            catch (ValidationException)
-            {
-                context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
-                throw;
-            }
-            catch (System.ComponentModel.DataAnnotations.ValidationException)
-            {
-                context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
-                throw;
-            }
-            catch (Exception)
-            {
-                context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                throw;
-            }
-        }).UseStatusCodePages(async statusCodeContext =>
+                try
+                {
+                    await next();
+                }
+                catch (AuthenticationException)
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    throw;
+                }
+                catch (ValidationException)
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    throw;
+                }
+                catch (System.ComponentModel.DataAnnotations.ValidationException)
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    throw;
+                }
+                catch (Exception)
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    throw;
+                }
+            }).UseStatusCodePages(async statusCodeContext =>
                 await Results.Problem(statusCode: statusCodeContext.HttpContext.Response.StatusCode)
                     .ExecuteAsync(statusCodeContext.HttpContext))
+
+            #endregion
+
+            #region Documentation middleware
+
             .UseSwagger()
             .UseSwagger()
             .UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); })
+
+            #endregion
+
+            #region API logic middleware
+
             .UseCors(options =>
             {
                 options.SetIsOriginAllowed(_ => true)
@@ -135,7 +168,10 @@ public class Program
                     .AllowAnyHeader()
                     .AllowCredentials();
             });
-            app.MapCarter();
+        app.MapCarter();
+
+        #endregion
+
 
         return app;
     }

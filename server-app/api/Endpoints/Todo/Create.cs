@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using api.Setup;
 using Carter;
 using Dapper;
-using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -10,15 +10,6 @@ namespace api.Endpoints.Todo;
 
 public class Create : ICarterModule
 {
-    private class CreateTodoRequestDto
-    {
-        [NotNull] [MinLength(1)] public string Title { get; set; } = default!;
-
-        public string Description { get; set; } = default!;
-        public DateTime DueDate { get; set; }
-        public int Priority { get; set; }
-        public List<IndependentHelpers.DomainModels.Tag> Tags { get; set; } = default!;
-    }
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/todos", (
@@ -27,7 +18,8 @@ public class Create : ICarterModule
             [FromServices] NpgsqlDataSource ds,
             HttpContext context) =>
         {
-            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
+            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context,
+                Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
             helpers.SecurityService.ValidateModel(req);
             var transaction = ds.OpenConnection().BeginTransaction();
             var todo = transaction.Connection!.QueryFirstOrDefault<TodoWithTags>(@"
@@ -58,5 +50,14 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
             return todo;
         });
     }
-}
 
+    private class CreateTodoRequestDto
+    {
+        [NotNull] [MinLength(1)] public string Title { get; } = default!;
+
+        public string Description { get; } = default!;
+        public DateTime DueDate { get; }
+        public int Priority { get; }
+        public List<IndependentHelpers.DomainModels.Tag> Tags { get; } = default!;
+    }
+}

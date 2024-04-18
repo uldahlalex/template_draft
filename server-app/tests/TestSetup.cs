@@ -10,6 +10,7 @@ public class TestSetup
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJVc2VybmFtZSI6ImJsYWFhaCIsIklkIjoxfQ.1aQtDZb0Vi8tSIt5YGtgEXCtWSh_9asIMLjzFkbwrN2QOGzA4d4kMFo9MtYfTepQ2k5e5PqTGmZt46HmMxKa3A";
 
     public WebApplication App;
+
     // public CredentialService CredentialService = new();
     public HttpClient HttpClient = new();
 

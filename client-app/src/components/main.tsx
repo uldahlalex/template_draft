@@ -3,6 +3,5 @@ import App from "./App.tsx";
 import '../styles.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-
-        <App/>
+    <App/>
 )

@@ -1,25 +1,18 @@
+using api.Setup;
 using Carter;
 using Dapper;
-using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
 namespace api.Endpoints.UserEndpoints;
 
-
 public class Register : ICarterModule
 {
-    private class RegisterDto
- {
-     public string Username { get; set; }
-     public string Password { get; set; }
- }
-
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/register",
             ([FromBody] RegisterDto req, [FromServices] NpgsqlDataSource ds,
-                [FromServices]ApiHelperFacade helpers) =>
+                [FromServices] ApiHelperFacade helpers) =>
             {
                 var salt = helpers.SecurityService.GenerateSalt();
                 var hash = helpers.SecurityService.Hash(req.Password, salt);
@@ -42,5 +35,11 @@ public class Register : ICarterModule
                     ], Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!)
                 };
             });
+    }
+
+    private class RegisterDto
+    {
+        public string Username { get; }
+        public string Password { get; }
     }
 }

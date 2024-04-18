@@ -1,6 +1,6 @@
+using api.Setup;
 using Carter;
 using Dapper;
-using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -8,23 +8,14 @@ namespace api.Endpoints.Todo;
 
 public class UpdateTodo : ICarterModule
 {
-    private class UpdateTodoRequestDto
-    {
-        public int Id { get; set; }
-        public string Title { get; set; } = default!;
-        public string Description { get; set; } = default!;
-        public DateTime DueDate { get; set; }
-        public bool IsCompleted { get; set; }
-        public int Priority { get; set; }
-    }
-
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPut("/api/todos/{id}", (UpdateTodoRequestDto req,
             [FromServices] ApiHelperFacade helpers,
             NpgsqlDataSource ds, HttpContext context) =>
         {
-            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
+            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context,
+                Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
 
 
             var conn = ds.OpenConnection();
@@ -38,5 +29,15 @@ RETURNING *;
             conn.Close();
             return todo;
         });
+    }
+
+    private class UpdateTodoRequestDto
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = default!;
+        public string Description { get; set; } = default!;
+        public DateTime DueDate { get; set; }
+        public bool IsCompleted { get; set; }
+        public int Priority { get; set; }
     }
 }

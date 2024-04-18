@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <PackageReference Include="JWT" Version="10.1.1"/>
-        
+
         <FrameworkReference Include="Microsoft.AspNetCore.App"/>
 
     </ItemGroup>

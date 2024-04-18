@@ -1,7 +1,7 @@
 using System.Text.Json;
+using api.Setup;
 using Carter;
 using Dapper;
-using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -21,7 +21,8 @@ public class GetTodosWithTags : ICarterModule
             [FromQuery] bool showCompleted,
             [FromQuery] int limit = 50) =>
         {
-            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
+            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context,
+                Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
 
             var tags = JsonSerializer.Deserialize<int[]>(serializedTagArray);
             IEnumerable<dynamic> todos;

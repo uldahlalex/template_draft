@@ -7,8 +7,6 @@
 
 Server application:
 
-
-
 Client application:
 Dependency-Cruiser chart:
 ![Dependency-Cruiser chart](./dependency-graph.svg)

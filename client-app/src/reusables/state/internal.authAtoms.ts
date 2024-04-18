@@ -8,6 +8,7 @@ export interface User {
     username: string;
     id: number;
 }
+
 export const userAtom = atom<User | null>((get) => {
     const token = get(jwtAtom);
     if (token == '') return null;

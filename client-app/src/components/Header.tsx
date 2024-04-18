@@ -1,8 +1,7 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useAtom} from "jotai/index";
-import toast from "react-hot-toast";
-import {userAtom, themeAtom, jwtAtom} from "../reusables/state/states.ts";
+import {jwtAtom, themeAtom, userAtom} from "../reusables/state/states.ts";
 
 export default function Header() {
 
@@ -55,7 +54,8 @@ export default function Header() {
                 <button onClick={e => {
                     setJwt('');
 
-                }} className="btn">Sign out</button>
+                }} className="btn">Sign out
+                </button>
             </div>
         </details>;
     }
@@ -77,9 +77,9 @@ export default function Header() {
                         <li><a onClick={() => {
                             navigate('feed');
                         }}>Demo to-do app for Programming II 2024</a></li>
-                           <li><a onClick={() => {
-                                navigate('login');
-                            }}>Go To Login</a></li>
+                        <li><a onClick={() => {
+                            navigate('login');
+                        }}>Go To Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -101,7 +101,8 @@ export default function Header() {
                         }}
                             className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-96 overflow-x-hidden overflow-y-auto max-h-80">
                             {
-                                themes.map((theme, index) => <li key={index}><a>{theme == selectedTheme ? '👉'+theme : theme}</a></li>)
+                                themes.map((theme, index) => <li key={index}>
+                                    <a>{theme == selectedTheme ? '👉' + theme : theme}</a></li>)
                             }
                         </ul>
                     </details>

@@ -4,7 +4,7 @@ using Docker.DotNet;
 using Docker.DotNet.Models;
 using Npgsql;
 
-namespace api.Boilerplate.DbHelpers;
+namespace api.Setup;
 
 public static class BuildDbContainer
 {
@@ -124,10 +124,11 @@ public static class BuildDbContainer
         if (OperatingSystem.IsLinux())
         {
             //if running on github actions:
-            if(Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true") return "unix:///var/run/docker.sock";
-                         return "unix:///home/alex/.docker/desktop/docker.sock"; //"unix:///var/run/docker.sock"; todo fix the linux path for the average user and not just me lol
-
+            if (Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true") return "unix:///var/run/docker.sock";
+            return
+                "unix:///home/alex/.docker/desktop/docker.sock"; //"unix:///var/run/docker.sock"; todo fix the linux path for the average user and not just me lol
         }
+
         if (OperatingSystem.IsMacOS()) return "unix:///var/run/docker.sock";
         throw new PlatformNotSupportedException("Unsupported operating system");
     }

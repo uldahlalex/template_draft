@@ -37,12 +37,14 @@ public class SecurityService
             throw new AuthenticationException("Authentication error regarding token");
         }
     }
+
     public void ValidateModel<T>(T model)
     {
         //todo fluent or annotations?
         var context = new ValidationContext(model, null, null);
         Validator.ValidateObject(model, context, true);
     }
+
     public string IssueJwt(IEnumerable<KeyValuePair<string, object>> claims, string privateKey)
     {
         try
@@ -61,7 +63,7 @@ public class SecurityService
             throw new InvalidOperationException("User authentication succeeded, but could not create token");
         }
     }
-    
+
     public string GenerateSalt()
     {
         var bytes = new byte[128 / 8];

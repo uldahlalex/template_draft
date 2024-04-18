@@ -10,9 +10,11 @@ interface ProblemDetails {
     status: number;
     detail?: string;
     instance?: string;
+
     [key: string]: any;
 }
-export const HttpErrorInterceptor = ()  => {
+
+export const HttpErrorInterceptor = () => {
 
     const [, setJwt] = useAtom(jwtAtom);
 
@@ -22,7 +24,7 @@ export const HttpErrorInterceptor = ()  => {
     }, (error: AxiosError<any, any>) => {
         if (error.response && error.response.status === 401) handleUnauthorizedAccess();
         const problemDetails = error.response?.data as ProblemDetails;
-        if (problemDetails) toast.error(problemDetails.detail!, { id: `error-${problemDetails.detail}` });
+        if (problemDetails) toast.error(problemDetails.detail!, {id: `error-${problemDetails.detail}`});
         return Promise.reject(error);
     });
     const handleUnauthorizedAccess = () => setJwt('')

@@ -1,6 +1,6 @@
+using api.Setup;
 using Carter;
 using Dapper;
-using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -8,18 +8,13 @@ namespace api.Endpoints.UserEndpoints;
 
 public class SignIn : ICarterModule
 {
-    private class SignInDto
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/signin", (
             [FromBody] SignInDto req,
             [FromServices] NpgsqlDataSource ds,
             [FromServices] ApiHelperFacade helpers
-            ) =>
+        ) =>
         {
             using var conn = ds.OpenConnection();
             var userToCheck = conn.QueryFirstOrDefault<User>(
@@ -38,8 +33,14 @@ public class SignIn : ICarterModule
                 token = helpers.SecurityService.IssueJwt([
                     new KeyValuePair<string, object>(nameof(userToCheck.Username), userToCheck.Username),
                     new KeyValuePair<string, object>(nameof(userToCheck.Id), userToCheck.Id)
-                ], Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!),
+                ], Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!)
             };
         });
+    }
+
+    private class SignInDto
+    {
+        public string Username { get; }
+        public string Password { get; }
     }
 }

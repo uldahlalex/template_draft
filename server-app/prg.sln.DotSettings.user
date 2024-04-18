@@ -1,6 +1,9 @@
-﻿<wpf:ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xml:space="preserve">
+﻿<wpf:ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:s="clr-namespace:System;assembly=mscorlib"
+                        xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xml:space="preserve">
 	
-    <s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e691f7a8_002Dc9e9_002D41f7_002D8704_002De546c00f6e3f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from ApiTests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+    <s:String
+            x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e691f7a8_002Dc9e9_002D41f7_002D8704_002De546c00f6e3f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from ApiTests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Or&gt;
     &lt;ProjectFile&gt;5E43013B-E99E-4A02-BA5E-B1E46BC7E2DA/f:ApiTests.cs&lt;/ProjectFile&gt;
     &lt;ProjectFile&gt;5E43013B-E99E-4A02-BA5E-B1E46BC7E2DA/f:SecurityUnitTests.cs&lt;/ProjectFile&gt;

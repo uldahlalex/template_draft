@@ -1,6 +1,6 @@
+using api.Setup;
 using Carter;
 using Dapper;
-using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -17,7 +17,8 @@ public class AddTagToTodo : ICarterModule
                 [FromRoute] int tagId,
                 [FromRoute] int todoId) =>
             {
-                helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context, Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
+                helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context,
+                    Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
                 var sql = @"
 INSERT INTO todo_manager.todo_tag (todoid, tagid)
 VALUES (@todoId, @tagId);";
@@ -27,6 +28,7 @@ VALUES (@todoId, @tagId);";
                     if (execution == 0)
                         throw new InvalidOperationException("Could not add tag to todo.");
                 }
+
                 return new { success = true };
             });
     }

@@ -1,6 +1,6 @@
+using api.Setup;
 using Carter;
 using Dapper;
-using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -8,11 +8,6 @@ namespace api.Endpoints.Tag;
 
 public class Createtag : ICarterModule
 {
-    private class CreateTagRequestDto
-    {
-        public string Name { get; set; }
-    }
-
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("api/tags", (
@@ -37,5 +32,10 @@ public class Createtag : ICarterModule
                 return insertedTag;
             }
         });
+    }
+
+    private class CreateTagRequestDto
+    {
+        public string Name { get; }
     }
 }
