@@ -1,0 +1,11 @@
+@startuml
+class SignIn {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+class SignInDto {
+    + Username : string <<get>>
+    + Password : string <<get>>
+}
+ICarterModule <|-- SignIn
+SignIn +-- SignInDto
+@enduml

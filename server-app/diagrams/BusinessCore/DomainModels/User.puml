@@ -1,0 +1,9 @@
+@startuml
+class User {
+    + Id : int <<get>> <<set>>
+    + Username : string <<get>> <<set>>
+    + PasswordHash : string? <<get>> <<set>>
+    + Password : string? <<get>> <<set>>
+    + Salt : string? <<get>> <<set>>
+}
+@enduml

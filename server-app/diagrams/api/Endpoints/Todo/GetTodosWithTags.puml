@@ -1,0 +1,6 @@
+@startuml
+class GetTodosWithTags {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+ICarterModule <|-- GetTodosWithTags
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class Createtag {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+class CreateTagRequestDto {
+    + Name : string <<get>>
+}
+ICarterModule <|-- Createtag
+Createtag +-- CreateTagRequestDto
+@enduml

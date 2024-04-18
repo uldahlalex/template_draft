@@ -1,0 +1,168 @@
+@startuml
+class Program {
+    + {static} <<async>> Main() : Task
+    + {static} <<async>> Startup() : Task<WebApplication>
+}
+class AssertionHelpers <<static>> {
+    + {static} ShouldNotContainNulls(obj:T) : void
+}
+class ApiTests {
+    + BeforeEachTest() : void
+    + SignInTest() : void
+    + <<async>> RegisterTest() : Task
+    + <<async>> CreateTodo() : Task
+}
+class SecurityUnitTests {
+    + GoodJwtShouldBeVerified() : void
+    + BadJwtShouldBeDenied() : void
+}
+class TestSetup {
+    + {static} JwtForTestUser : string = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJVc2VybmFtZSI6ImJsYWFhaCIsIklkIjoxfQ.1aQtDZb0Vi8tSIt5YGtgEXCtWSh_9asIMLjzFkbwrN2QOGzA4d4kMFo9MtYfTepQ2k5e5PqTGmZt46HmMxKa3A"
+    + TestSetup()
+}
+TestSetup --> "App" WebApplication
+TestSetup o-> "HttpClient" HttpClient
+TestSetup o-> "TestTagHome" Tag
+TestSetup o-> "TestTagWork" Tag
+TestSetup o-> "TestTodo" TodoWithTags
+TestSetup o-> "TestUser" User
+class SecurityService {
+    + VerifyJwtReturnPayloadAsT(context:HttpContext, secret:string) : T
+    + ValidateModel(model:T) : void
+    + IssueJwt(claims:IEnumerable<KeyValuePair<string, object>>, privateKey:string) : string
+    + GenerateSalt() : string
+    + Hash(password:string, salt:string) : string
+}
+class ApiHelperFacade {
+}
+ApiHelperFacade o-> "SecurityService" SecurityService
+ApiHelperFacade o-> "ValuesService" ValuesService
+ApiHelperFacade o-> "KeyNamesService" KeyNamesService
+class BuildDbContainer <<static>> {
+    + {static} <<async>> StartDbInContainer(postgresConnectionString:string) : Task
+}
+class SwaggerJsonGeneratorService {
+}
+BackgroundService <|-- SwaggerJsonGeneratorService
+class GetAllWithTags {
+    + Test() : void
+}
+class AuthenticationResponseDto {
+    + token : string <<get>> <<set>>
+}
+class Tag {
+    + Id : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + UserId : int <<get>> <<set>>
+}
+class TodoWithTags {
+    + Id : int <<get>> <<set>>
+    + Title : string <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + IsCompleted : bool <<get>> <<set>>
+    + Priority : int <<get>> <<set>>
+    + UserId : int <<get>> <<set>>
+}
+class "List`1"<T> {
+}
+TodoWithTags --> "DueDate" DateTime
+TodoWithTags --> "CreatedAt" DateTime
+TodoWithTags o-> "Tags<Tag>" "List`1"
+class User {
+    + Id : int <<get>> <<set>>
+    + Username : string <<get>> <<set>>
+    + PasswordHash : string? <<get>> <<set>>
+    + Password : string? <<get>> <<set>>
+    + Salt : string? <<get>> <<set>>
+}
+class KeyNamesService {
+    + ASPNETCORE_ENVIRONMENT : string
+    + JWT_KEY : string
+    + PG_CONN : string
+    + SKIP_DB_CONTAINER_BUILDING : string
+}
+class ValuesService {
+    + Development : string
+    + JWT_KEY : string = "hdsfkyudsfksahfkdsahfffukdsafhkdsaufhidsafhkdsahfkdsahfiudsahfkdsahfkudsahfkudsahfkudsahfkudsahfkdsahfkuds"
+    + LOCAL_POSTGRES : string = "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=postgres;Pooling=true;MaxPoolSize=5;"
+    + Production : string
+    + Testing : string
+}
+class AddTagToTodo {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+ICarterModule <|-- AddTagToTodo
+class Createtag {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+class CreateTagRequestDto {
+    + Name : string <<get>>
+}
+ICarterModule <|-- Createtag
+Createtag +-- CreateTagRequestDto
+class DeleteTag {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+ICarterModule <|-- DeleteTag
+class GetTags {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+ICarterModule <|-- GetTags
+class RemoveTagToTodo {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+ICarterModule <|-- RemoveTagToTodo
+class Create {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+class CreateTodoRequestDto {
+    + Title : string <<get>>
+    + Description : string <<get>>
+    + Priority : int <<get>>
+}
+class "List`1"<T> {
+}
+ICarterModule <|-- Create
+Create +-- CreateTodoRequestDto
+CreateTodoRequestDto --> "DueDate" DateTime
+CreateTodoRequestDto o-> "Tags<IndependentHelpers.DomainModels.Tag>" "List`1"
+class Delete {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+ICarterModule <|-- Delete
+class GetTodosWithTags {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+ICarterModule <|-- GetTodosWithTags
+class UpdateTodo {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+class UpdateTodoRequestDto {
+    + Id : int <<get>> <<set>>
+    + Title : string <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + IsCompleted : bool <<get>> <<set>>
+    + Priority : int <<get>> <<set>>
+}
+ICarterModule <|-- UpdateTodo
+UpdateTodo +-- UpdateTodoRequestDto
+UpdateTodoRequestDto --> "DueDate" DateTime
+class Register {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+class RegisterDto {
+    + Username : string <<get>>
+    + Password : string <<get>>
+}
+ICarterModule <|-- Register
+Register +-- RegisterDto
+class SignIn {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+class SignInDto {
+    + Username : string <<get>>
+    + Password : string <<get>>
+}
+ICarterModule <|-- SignIn
+SignIn +-- SignInDto
+@enduml

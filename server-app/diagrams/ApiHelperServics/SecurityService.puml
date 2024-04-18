@@ -1,0 +1,9 @@
+@startuml
+class SecurityService {
+    + VerifyJwtReturnPayloadAsT(context:HttpContext, secret:string) : T
+    + ValidateModel(model:T) : void
+    + IssueJwt(claims:IEnumerable<KeyValuePair<string, object>>, privateKey:string) : string
+    + GenerateSalt() : string
+    + Hash(password:string, salt:string) : string
+}
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class ApiHelperFacade {
+}
+ApiHelperFacade o-> "SecurityService" SecurityService
+ApiHelperFacade o-> "ValuesService" ValuesService
+ApiHelperFacade o-> "KeyNamesService" KeyNamesService
+@enduml

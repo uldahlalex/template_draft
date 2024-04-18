@@ -1,0 +1,15 @@
+@startuml
+class UpdateTodo {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+class UpdateTodoRequestDto {
+    + Id : int <<get>> <<set>>
+    + Title : string <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + IsCompleted : bool <<get>> <<set>>
+    + Priority : int <<get>> <<set>>
+}
+ICarterModule <|-- UpdateTodo
+UpdateTodo +-- UpdateTodoRequestDto
+UpdateTodoRequestDto --> "DueDate" DateTime
+@enduml

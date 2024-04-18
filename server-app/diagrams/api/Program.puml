@@ -1,0 +1,6 @@
+@startuml
+class Program {
+    + {static} <<async>> Main() : Task
+    + {static} <<async>> Startup() : Task<WebApplication>
+}
+@enduml

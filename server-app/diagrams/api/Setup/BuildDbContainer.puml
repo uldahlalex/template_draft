@@ -1,0 +1,5 @@
+@startuml
+class BuildDbContainer <<static>> {
+    + {static} <<async>> StartDbInContainer(postgresConnectionString:string) : Task
+}
+@enduml

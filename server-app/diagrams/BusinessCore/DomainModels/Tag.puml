@@ -1,0 +1,7 @@
+@startuml
+class Tag {
+    + Id : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + UserId : int <<get>> <<set>>
+}
+@enduml

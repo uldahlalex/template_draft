@@ -1,0 +1,8 @@
+@startuml
+class KeyNamesService {
+    + ASPNETCORE_ENVIRONMENT : string
+    + JWT_KEY : string
+    + PG_CONN : string
+    + SKIP_DB_CONTAINER_BUILDING : string
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class ApiTests {
+    + BeforeEachTest() : void
+    + SignInTest() : void
+    + <<async>> RegisterTest() : Task
+    + <<async>> CreateTodo() : Task
+}
+@enduml

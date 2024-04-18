@@ -1,0 +1,16 @@
+@startuml
+class Create {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+class CreateTodoRequestDto {
+    + Title : string <<get>>
+    + Description : string <<get>>
+    + Priority : int <<get>>
+}
+class "List`1"<T> {
+}
+ICarterModule <|-- Create
+Create +-- CreateTodoRequestDto
+CreateTodoRequestDto --> "DueDate" DateTime
+CreateTodoRequestDto o-> "Tags<IndependentHelpers.DomainModels.Tag>" "List`1"
+@enduml

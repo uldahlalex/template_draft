@@ -1,0 +1,6 @@
+@startuml
+class SecurityUnitTests {
+    + GoodJwtShouldBeVerified() : void
+    + BadJwtShouldBeDenied() : void
+}
+@enduml

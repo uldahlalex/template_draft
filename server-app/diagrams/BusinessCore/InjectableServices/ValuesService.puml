@@ -1,0 +1,9 @@
+@startuml
+class ValuesService {
+    + Development : string
+    + JWT_KEY : string = "hdsfkyudsfksahfkdsahfffukdsafhkdsaufhidsafhkdsahfkdsahfiudsahfkdsahfkudsahfkudsahfkudsahfkudsahfkdsahfkuds"
+    + LOCAL_POSTGRES : string = "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=postgres;Pooling=true;MaxPoolSize=5;"
+    + Production : string
+    + Testing : string
+}
+@enduml

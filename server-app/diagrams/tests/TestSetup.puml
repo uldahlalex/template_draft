@@ -1,0 +1,12 @@
+@startuml
+class TestSetup {
+    + {static} JwtForTestUser : string = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJVc2VybmFtZSI6ImJsYWFhaCIsIklkIjoxfQ.1aQtDZb0Vi8tSIt5YGtgEXCtWSh_9asIMLjzFkbwrN2QOGzA4d4kMFo9MtYfTepQ2k5e5PqTGmZt46HmMxKa3A"
+    + TestSetup()
+}
+TestSetup --> "App" WebApplication
+TestSetup o-> "HttpClient" HttpClient
+TestSetup o-> "TestTagHome" Tag
+TestSetup o-> "TestTagWork" Tag
+TestSetup o-> "TestTodo" TodoWithTags
+TestSetup o-> "TestUser" User
+@enduml

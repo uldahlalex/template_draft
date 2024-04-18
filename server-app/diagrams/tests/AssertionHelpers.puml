@@ -1,0 +1,5 @@
+@startuml
+class AssertionHelpers <<static>> {
+    + {static} ShouldNotContainNulls(obj:T) : void
+}
+@enduml

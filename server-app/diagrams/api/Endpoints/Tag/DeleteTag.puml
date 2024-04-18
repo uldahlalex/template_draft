@@ -1,0 +1,6 @@
+@startuml
+class DeleteTag {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+ICarterModule <|-- DeleteTag
+@enduml

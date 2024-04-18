@@ -1,0 +1,5 @@
+@startuml
+class SwaggerJsonGeneratorService {
+}
+BackgroundService <|-- SwaggerJsonGeneratorService
+@enduml

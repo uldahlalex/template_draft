@@ -1,0 +1,11 @@
+@startuml
+class Register {
+    + AddRoutes(app:IEndpointRouteBuilder) : void
+}
+class RegisterDto {
+    + Username : string <<get>>
+    + Password : string <<get>>
+}
+ICarterModule <|-- Register
+Register +-- RegisterDto
+@enduml

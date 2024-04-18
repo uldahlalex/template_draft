@@ -1,0 +1,15 @@
+@startuml
+class TodoWithTags {
+    + Id : int <<get>> <<set>>
+    + Title : string <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + IsCompleted : bool <<get>> <<set>>
+    + Priority : int <<get>> <<set>>
+    + UserId : int <<get>> <<set>>
+}
+class "List`1"<T> {
+}
+TodoWithTags --> "DueDate" DateTime
+TodoWithTags --> "CreatedAt" DateTime
+TodoWithTags o-> "Tags<Tag>" "List`1"
+@enduml
