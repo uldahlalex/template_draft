@@ -4,6 +4,7 @@ using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using src.services;
+using src.statics;
 
 namespace api.Endpoints.UserEndpoints;
 
@@ -17,6 +18,7 @@ public class SignIn : ICarterModule
             [FromServices] AwesomeServices services
         ) =>
         {
+
             using var conn = ds.OpenConnection();
             var userToCheck = conn.QueryFirstOrDefault<User>(
                 "SELECT * FROM todo_manager.user where username = @username;",
@@ -44,10 +46,11 @@ public class SignIn : ICarterModule
             };
         });
     }
-
-    private class SignInDto
-    {
-        [MinLength(1)] public string Username { get; set; }
-        [MinLength(4)] public string Password { get; set; }
-    }
+public class SignInDto
+{
+    [MinLength(1)]
+    public string Username { get; set; }
+    [MinLength(4)]
+    public string Password { get; set; }
+}
 }
