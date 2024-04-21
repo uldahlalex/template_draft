@@ -37,7 +37,7 @@ public static class Program
         var builder = WebApplication.CreateBuilder();
         var currentAssembly = Assembly.GetExecutingAssembly();
         var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{currentAssembly.GetName().Name}.xml");
-        builder.Services.AddAwesomeServices(new ServiceConfiguration()
+        builder.Services.AddAwesomeServices(new ServiceConfiguration
             {
                 //DefaultDockerSocketPath = 
             },
@@ -46,9 +46,7 @@ public static class Program
 
         var app = builder.Build();
 
-        app.UseAwesomeServices(new AppConfiguration()
-        {
-        });
+        app.UseAwesomeServices(new AppConfiguration());
 
         return Task.FromResult(app);
     }

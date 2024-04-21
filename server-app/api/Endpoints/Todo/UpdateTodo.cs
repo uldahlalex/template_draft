@@ -1,4 +1,3 @@
-using api.Setup;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +16,6 @@ public class UpdateTodo : ICarterModule
         {
             services.Security.VerifyJwtReturnPayloadAsT<User>(context,
                 Environment.GetEnvironmentVariable(EnvVarNames.JWT_KEY)!);
-
 
 
             var conn = ds.OpenConnection();

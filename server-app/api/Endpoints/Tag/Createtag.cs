@@ -36,6 +36,6 @@ public class Createtag : ICarterModule
 
     private class CreateTagRequestDto
     {
-        public string Name { get; }
+        public string Name { get; set; }
     }
 }

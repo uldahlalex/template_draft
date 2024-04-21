@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using api.Setup;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -55,11 +54,10 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
 
     private class CreateTodoRequestDto
     {
-        [NotNull] [MinLength(1)] public string Title { get; } = default!;
-
-        public string Description { get; } = default!;
-        public DateTime DueDate { get; }
-        public int Priority { get; }
-        public List<IndependentHelpers.DomainModels.Tag> Tags { get; } = default!;
+        [NotNull] [MinLength(1)] public string Title { get; set; } = default!;
+        public string Description { get; set; } = default!;
+        public DateTime DueDate { get; set; }
+        public int Priority { get; set; }
+        public List<IndependentHelpers.DomainModels.Tag> Tags { get; set; } = default!;
     }
 }

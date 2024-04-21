@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="uldahlalex.awesomeutilities" Version="1.0.5" />
+        <PackageReference Include="uldahlalex.awesomeutilities" Version="1.0.5"/>
     </ItemGroup>
 
     <ItemGroup>

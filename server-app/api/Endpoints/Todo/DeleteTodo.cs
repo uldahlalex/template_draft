@@ -1,4 +1,3 @@
-using api.Setup;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +10,9 @@ public class Delete : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("api/todo/{id}", (int id, 
+        app.MapDelete("api/todo/{id}", (int id,
             HttpContext context,
-            [FromServices]AwesomeServices services,
+            [FromServices] AwesomeServices services,
             NpgsqlDataSource ds) =>
         {
             services.Security.VerifyJwtReturnPayloadAsT<User>(context,

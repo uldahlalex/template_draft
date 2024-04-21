@@ -1,7 +1,7 @@
 namespace IndependentHelpers;
 
 /// <summary>
-/// Strongly typed string constants
+///     Strongly typed string constants
 /// </summary>
 public static class Constants
 {

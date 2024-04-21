@@ -1,4 +1,3 @@
-using api.Setup;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +16,8 @@ public class RemoveTagToTodo : ICarterModule
                 [FromServices] AwesomeServices services,
                 [FromRoute] int tagId,
                 [FromRoute] int todoId) =>
-            {services.Security.VerifyJwtReturnPayloadAsT<User>(context,
+            {
+                services.Security.VerifyJwtReturnPayloadAsT<User>(context,
                     Environment.GetEnvironmentVariable(EnvVarNames.JWT_KEY)!);
 
                 var sql = @"

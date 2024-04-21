@@ -1,4 +1,3 @@
-using api.Setup;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;

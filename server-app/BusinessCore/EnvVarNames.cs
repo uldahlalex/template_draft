@@ -1,7 +1,7 @@
 namespace IndependentHelpers;
 
 /// <summary>
-/// Key names for environment variables for strongly typed programming
+///     Key names for environment variables for strongly typed programming
 /// </summary>
 public class EnvVarNames
 {

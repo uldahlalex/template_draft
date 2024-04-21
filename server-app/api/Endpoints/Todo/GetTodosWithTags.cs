@@ -1,5 +1,4 @@
 using System.Text.Json;
-using api.Setup;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +21,7 @@ public class GetTodosWithTags : ICarterModule
             [FromQuery] bool showCompleted,
             [FromQuery] int limit = 50) =>
         {
-            var user =services.Security.VerifyJwtReturnPayloadAsT<User>(context,
+            var user = services.Security.VerifyJwtReturnPayloadAsT<User>(context,
                 Environment.GetEnvironmentVariable(EnvVarNames.JWT_KEY)!);
 
             var tags = JsonSerializer.Deserialize<int[]>(serializedTagArray);
