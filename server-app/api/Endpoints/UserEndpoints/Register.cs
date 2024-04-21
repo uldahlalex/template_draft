@@ -1,8 +1,8 @@
-using api.Setup;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
+using src.services;
 
 namespace api.Endpoints.UserEndpoints;
 
@@ -12,10 +12,11 @@ public class Register : ICarterModule
     {
         app.MapPost("/api/register",
             ([FromBody] RegisterDto req, [FromServices] NpgsqlDataSource ds,
-                [FromServices] ApiHelperFacade helpers) =>
+                [FromServices] AwesomeServices services
+            ) =>
             {
-                var salt = helpers.SecurityService.GenerateSalt();
-                var hash = helpers.SecurityService.Hash(req.Password, salt);
+                var salt = services.Security.GenerateSalt();
+                var hash = services.Security.Hash(req.Password, salt);
                 using var conn = ds.OpenConnection();
                 var user = conn.QueryFirstOrDefault<User>(
                     "insert into todo_manager.user (username, passwordhash, salt) values (@Username, @PasswordHash, @Salt) RETURNING *;",
@@ -29,10 +30,10 @@ public class Register : ICarterModule
 
                 return new AuthenticationResponseDto
                 {
-                    token = helpers.SecurityService.IssueJwt([
+                    token = services.Security.IssueJwt([
                         new KeyValuePair<string, object>(nameof(user.Username), user.Username),
                         new KeyValuePair<string, object>(nameof(user.Id), user.Id)
-                    ], Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!)
+                    ], Environment.GetEnvironmentVariable(EnvVarNames.JWT_KEY)!)
                 };
             });
     }

@@ -3,6 +3,7 @@ using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
+using src.services;
 
 namespace api.Endpoints.UserEndpoints;
 
@@ -13,7 +14,7 @@ public class SignIn : ICarterModule
         app.MapPost("/api/signin", (
             [FromBody] SignInDto req,
             [FromServices] NpgsqlDataSource ds,
-            [FromServices] ApiHelperFacade helpers
+            [FromServices] AwesomeServices services
         ) =>
         {
             using var conn = ds.OpenConnection();
@@ -25,15 +26,15 @@ public class SignIn : ICarterModule
                 }) ?? throw new InvalidOperationException("Invalid sign-in");
             conn.Close();
 
-            if (helpers.SecurityService.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
+            if (services.Security.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
                 throw new InvalidOperationException("Invalid sign-in");
 
             return new AuthenticationResponseDto
             {
-                token = helpers.SecurityService.IssueJwt([
+                token = services.Security.IssueJwt([
                     new KeyValuePair<string, object>(nameof(userToCheck.Username), userToCheck.Username),
                     new KeyValuePair<string, object>(nameof(userToCheck.Id), userToCheck.Id)
-                ], Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!)
+                ], Environment.GetEnvironmentVariable(EnvVarNames.JWT_KEY)!)
             };
         });
     }

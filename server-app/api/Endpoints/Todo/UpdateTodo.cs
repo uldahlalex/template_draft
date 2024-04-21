@@ -3,6 +3,7 @@ using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
+using src.services;
 
 namespace api.Endpoints.Todo;
 
@@ -11,11 +12,12 @@ public class UpdateTodo : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPut("/api/todos/{id}", (UpdateTodoRequestDto req,
-            [FromServices] ApiHelperFacade helpers,
+            [FromServices] AwesomeServices services,
             NpgsqlDataSource ds, HttpContext context) =>
         {
-            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context,
-                Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
+            services.Security.VerifyJwtReturnPayloadAsT<User>(context,
+                Environment.GetEnvironmentVariable(EnvVarNames.JWT_KEY)!);
+
 
 
             var conn = ds.OpenConnection();

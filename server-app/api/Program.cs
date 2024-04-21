@@ -32,10 +32,16 @@ public static class Program
                           JsonSerializer.Serialize(Environment.GetEnvironmentVariables()));
 
         var builder = WebApplication.CreateBuilder();
-        builder.Services.AddAwesomeServices(new ServiceConfiguration());
+        builder.Services.AddAwesomeServices(new ServiceConfiguration()
+        {
+            
+        });
 
         var app = builder.Build();
-        app.UseAwesomeServices(new AppConfiguration());
+        app.UseAwesomeServices(new AppConfiguration()
+        {
+            
+        });
 
 
         return Task.FromResult(app);

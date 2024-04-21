@@ -5,6 +5,7 @@ using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
+using src.services;
 
 namespace api.Endpoints.Todo;
 
@@ -14,13 +15,14 @@ public class Create : ICarterModule
     {
         app.MapPost("/api/todos", (
             [FromBody] CreateTodoRequestDto req,
-            ApiHelperFacade helpers,
+            [FromServices] AwesomeServices services,
             [FromServices] NpgsqlDataSource ds,
             HttpContext context) =>
         {
-            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context,
-                Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
-            helpers.SecurityService.ValidateModel(req);
+            var user = services.Security.VerifyJwtReturnPayloadAsT<User>(context,
+                Environment.GetEnvironmentVariable(EnvVarNames.JWT_KEY)!);
+
+            services.Security.ValidateModel(req);
             var transaction = ds.OpenConnection().BeginTransaction();
             var todo = transaction.Connection!.QueryFirstOrDefault<TodoWithTags>(@"
 insert into todo_manager.todo (title, description, duedate, userid, priority)

@@ -3,7 +3,6 @@ using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using src.services;
-using EnvVarNames = src.statics.EnvVarNames;
 
 namespace api.Endpoints.Tag;
 

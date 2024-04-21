@@ -3,6 +3,7 @@ using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
+using src.services;
 
 namespace api.Endpoints.Tag;
 
@@ -11,11 +12,12 @@ public class GetTags : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapGet("/api/tags", (NpgsqlDataSource ds, HttpContext context,
-                [FromServicesAttribute] ApiHelperFacade helpers
+                [FromServices] AwesomeServices services
             ) =>
             {
-                var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context,
-                    Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
+                var user = services.Security.VerifyJwtReturnPayloadAsT<User>(context,
+                    Environment.GetEnvironmentVariable(EnvVarNames.JWT_KEY)!);
+
 
                 List<IndependentHelpers.DomainModels.Tag> tags;
                 using (var conn = ds.OpenConnection())
