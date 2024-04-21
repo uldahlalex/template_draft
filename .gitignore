@@ -8,3 +8,5 @@ node_modules
 dist
 www
 .vite
+
+server-app/prg.sln.DotSettings.user
