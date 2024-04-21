@@ -1,4 +1,6 @@
+using System.Reflection;
 using System.Text.Json;
+using api.Setup;
 using Dapper;
 using Npgsql;
 using IndependentHelpers;
@@ -13,12 +15,12 @@ public static class Program
 
         if (!Environment.GetEnvironmentVariable(EnvVarNames.ASPNETCORE_ENVIRONMENT)!.Equals(Constants.Production))
         {
-            var conn = app.Services.GetRequiredService<NpgsqlDataSource>().OpenConnection();
-            var schema = File.ReadAllText("../../scripts/PostgresSchema.sql");
-            var seed = File.ReadAllText("../../scripts/SeedDb.sql");
-            conn.Execute(schema);
-            conn.Execute(seed);
-            conn.Close();
+                var conn = app.Services.GetRequiredService<NpgsqlDataSource>().OpenConnection();
+                var schema = File.ReadAllText("../../scripts/PostgresSchema.sql");
+                var seed = File.ReadAllText("../../scripts/SeedDb.sql");
+                conn.Execute(schema);
+                conn.Execute(seed);
+                conn.Close();
         }
 
         app.Run();
@@ -32,18 +34,22 @@ public static class Program
                           JsonSerializer.Serialize(Environment.GetEnvironmentVariables()));
 
         var builder = WebApplication.CreateBuilder();
+        var currentAssembly = Assembly.GetExecutingAssembly();
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{currentAssembly.GetName().Name}.xml");
         builder.Services.AddAwesomeServices(new ServiceConfiguration()
-        {
-            
-        });
+            {
+                //DefaultDockerSocketPath = 
+            },
+            new List<Assembly> { currentAssembly }, // Assemblies containing Carter modules
+            new List<string> { xmlPath });            // Paths to XML documentation files);
 
         var app = builder.Build();
+        
         app.UseAwesomeServices(new AppConfiguration()
         {
             
         });
-
-
+        
         return Task.FromResult(app);
     }
 }
