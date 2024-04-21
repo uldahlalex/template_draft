@@ -1,2 +1,2 @@
 global using IndependentHelpers.DomainModels;
-global using IndependentHelpers.InjectableServices;
+global using IndependentHelpers;

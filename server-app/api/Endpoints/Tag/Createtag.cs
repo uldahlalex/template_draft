@@ -1,8 +1,9 @@
-using api.Setup;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
+using src.services;
+using EnvVarNames = src.statics.EnvVarNames;
 
 namespace api.Endpoints.Tag;
 
@@ -13,11 +14,11 @@ public class Createtag : ICarterModule
         app.MapPost("api/tags", (
             [FromBody] CreateTagRequestDto dto,
             HttpContext context,
-            [FromServices] ApiHelperFacade helpers,
+            [FromServices] AwesomeServices services,
             [FromServices] NpgsqlDataSource ds) =>
         {
-            var user = helpers.SecurityService.VerifyJwtReturnPayloadAsT<User>(context,
-                Environment.GetEnvironmentVariable(helpers.KeyNamesService.JWT_KEY)!);
+            var user = services.Security.VerifyJwtReturnPayloadAsT<User>(context,
+                Environment.GetEnvironmentVariable(EnvVarNames.JWT_KEY)!);
 
             using (var conn = ds.OpenConnection())
             {

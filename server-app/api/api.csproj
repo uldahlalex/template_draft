@@ -13,7 +13,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\BusinessCore\BusinessCore.csproj"/>
-        <ProjectReference Include="..\ApiHelperServics\ApiHelperServics.csproj"/>
     </ItemGroup>
 
 
