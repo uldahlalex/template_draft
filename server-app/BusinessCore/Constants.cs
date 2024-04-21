@@ -5,10 +5,10 @@ namespace IndependentHelpers;
 /// </summary>
 public static class Constants
 {
-    public const string JWT_KEY =
+    public const string DEFAULT_JWT_KEY =
         "hdsfkyudsfksahfkdsahfffukdsafhkdsaufhidsafhkdsahfkdsahfiudsahfkdsahfkudsahfkudsahfkudsahfkudsahfkdsahfkuds";
 
-    public const string LOCAL_POSTGRES =
+    public const string DEFAULT_LOCAL_POSTGRES =
         "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=postgres;Pooling=true;MaxPoolSize=5;";
 
 

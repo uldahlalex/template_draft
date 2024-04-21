@@ -463,14 +463,14 @@
         "type": "object",
         "properties": {
           "username": {
+            "minLength": 1,
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "password": {
+            "minLength": 4,
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           }
         },
         "additionalProperties": false

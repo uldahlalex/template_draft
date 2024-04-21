@@ -1,4 +1,4 @@
-using api.Setup;
+using System.ComponentModel.DataAnnotations;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -22,8 +22,14 @@ public class SignIn : ICarterModule
                 "SELECT * FROM todo_manager.user where username = @username;",
                 new
                 {
-                    req.Username
-                }) ?? throw new InvalidOperationException("Invalid sign-in");
+                    username = req.Username
+                });
+            if (userToCheck == null)
+            {
+                Console.WriteLine($"User {req.Username} not found in database");
+                throw new InvalidOperationException("Invalid sign-in");
+            }
+
             conn.Close();
 
             if (services.Security.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
@@ -41,7 +47,7 @@ public class SignIn : ICarterModule
 
     private class SignInDto
     {
-        public string Username { get; }
-        public string Password { get; }
+        [MinLength(1)] public string Username { get; set; }
+        [MinLength(4)] public string Password { get; set; }
     }
 }
