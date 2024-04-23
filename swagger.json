@@ -402,8 +402,7 @@
         "properties": {
           "name": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -414,31 +413,26 @@
           "title": {
             "minLength": 1,
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "description": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "dueDate": {
             "type": "string",
-            "format": "date-time",
-            "readOnly": true
+            "format": "date-time"
           },
           "priority": {
             "type": "integer",
-            "format": "int32",
-            "readOnly": true
+            "format": "int32"
           },
           "tags": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Tag"
             },
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -576,7 +570,7 @@
   },
   "security": [
     {
-      "Bearer": []
+      "Bearer": [ ]
     }
   ]
 }

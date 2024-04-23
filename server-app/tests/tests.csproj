@@ -19,4 +19,14 @@
         <ProjectReference Include="..\api\api.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <EmbeddedResource Include="..\..\scripts\PostgresSchema.sql">
+            <Link>scripts\PostgresSchema.sql</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\..\scripts\SeedDb.sql">
+            <Link>scripts\SeedDb.sql</Link>
+        </EmbeddedResource>
+    </ItemGroup>
+
+
 </Project>

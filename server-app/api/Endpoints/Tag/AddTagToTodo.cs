@@ -1,5 +1,6 @@
 using Carter;
 using Dapper;
+using IndependentHelpers.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using src.services;
