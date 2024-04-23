@@ -62,7 +62,10 @@ public static class Program
         var app = builder.Build();
 
         // Use the configured services
-        app.UseAwesomeServices(new AppConfiguration());
+        app.UseAwesomeServices(new AppConfiguration()
+        {
+            SkipDbContainer = Environment.GetEnvironmentVariable(EnvVarNames.ASPNETCORE_ENVIRONMENT)!.Equals(Constants.Development)
+        });
         
         Console.WriteLine("Application has been successfully built and configured.");
 
@@ -93,6 +96,7 @@ public static class Program
             builder.Services.AddAwesomeServices(new ServiceConfiguration
                 {
                     // Configuration details here
+                    
                 },
                 new List<Assembly> { currentAssembly }, // Assemblies containing modules
                 new List<string> { xmlPath }); // Paths to XML documentation files
